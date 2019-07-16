@@ -12,6 +12,7 @@ buildscript {
         navigationfragmentktx_version = '2.1.0-alpha06'
         navigationui_version = '2.0.0'
         fragmentktx_version = '1.0.0'
+        safeargs_version = '1.0.0-alpha11'
     }
     repositories {
         google()
@@ -22,6 +23,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.5.0-beta05'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationui_version"
+        classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:$safeargs_version"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

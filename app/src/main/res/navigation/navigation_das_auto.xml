@@ -22,9 +22,10 @@
         android:label="fragment_car_types"
         tools:layout="@layout/view_car_types">
         <argument
-            android:name="manufacturer"
-            app:argType="string"
-            android:defaultValue="Manufacturer"/>
+            android:name="wkda"
+            app:argType="com.stonetree.demowagen.features.manufacturer.model.WKDA"
+            android:defaultValue="@null"
+            app:nullable="true"/>
         <action
             android:id="@+id/action_car_types_view_to_built_dates_view"
             app:destination="@id/built_dates_view"

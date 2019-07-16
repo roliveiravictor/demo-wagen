@@ -8,6 +8,7 @@ import com.stonetree.demowagen.features.cartypes.resources.api.CarTypesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Call
+import retrofit2.Response
 import stonetree.com.meals.core.provider.CoreRepository
 
 class CarTypesRepository {
@@ -22,13 +23,11 @@ class CarTypesRepository {
 
     suspend fun getCarTypes(manufacturerId: String, data: MutableLiveData<List<String>>) {
         val api = CoreRepository.retrofit.create(CarTypesApi::class.java)
-        val request: Call<CarTypesResponse> = api.getCarTypes(manufacturerId)
+        val request: Call<CarTypesResponse> = api.getCarTypes(id = manufacturerId)
         withContext(Dispatchers.IO) {
             request.enqueue {
                 onResponse = { response ->
-                    response.body()?.wkda?.values?.let {
-                        data.postValue(it.toList())
-                    }
+                    parse(response, data)
                     Log.i(javaClass.name, response.body().toString())
                 }
 
@@ -36,6 +35,15 @@ class CarTypesRepository {
                     Log.e(javaClass.name, error?.message)
                 }
             }
+        }
+    }
+
+    private fun parse(
+        response: Response<CarTypesResponse>,
+        data: MutableLiveData<List<String>>
+    ) {
+        response.body()?.wkda?.values?.let {
+            data.postValue(it.toList())
         }
     }
 }

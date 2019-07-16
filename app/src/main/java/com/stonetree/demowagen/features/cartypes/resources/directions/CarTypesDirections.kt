@@ -7,12 +7,12 @@ import com.stonetree.demowagen.constants.DirectionsBundleKey
 
 class CarTypesDirections private constructor() {
 
-    private data class ActionCarTypesToBuiltDates(val carType: String) : NavDirections {
+    private data class ActionCarTypesToBuiltDates(val manufacturerId: String) : NavDirections {
         override fun getActionId(): Int = R.id.built_dates_view
 
         override fun getArguments(): Bundle {
             val result = Bundle()
-            result.putString(DirectionsBundleKey.CAR_TYPES, this.carType)
+            result.putString(DirectionsBundleKey.CAR_TYPES, this.manufacturerId)
             return result
         }
     }

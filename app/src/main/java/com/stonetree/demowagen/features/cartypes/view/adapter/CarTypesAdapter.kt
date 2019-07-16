@@ -34,9 +34,9 @@ class CarTypesAdapter : ListAdapter<String, CarTypesAdapter.ViewHolder>(CarTypes
     }
 
     private fun createOnClickListener(carType: String): View.OnClickListener {
-        return View.OnClickListener {
+        return View.OnClickListener { view ->
             val direction = CarTypesDirections.actionCarTypesToBuiltDates(carType)
-            it.findNavController().navigate(direction)
+            view.findNavController().navigate(direction)
         }
     }
 

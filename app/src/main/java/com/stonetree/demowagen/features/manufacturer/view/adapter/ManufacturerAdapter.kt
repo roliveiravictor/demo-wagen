@@ -10,15 +10,16 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.stonetree.demowagen.R
 import com.stonetree.demowagen.databinding.ListItemManufacturerBinding
+import com.stonetree.demowagen.features.manufacturer.model.WKDA
 import com.stonetree.demowagen.features.manufacturer.resources.directions.ManufacturerDirections
 
-class ManufacturerAdapter : ListAdapter<String, ManufacturerAdapter.ViewHolder>(ManufacturerDiffCallback()) {
+class ManufacturerAdapter : ListAdapter<WKDA, ManufacturerAdapter.ViewHolder>(ManufacturerDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        getItem(position).let { manufacturer ->
+        getItem(position).let { wkda ->
             with(holder) {
                 itemView.tag = position
-                bind(createOnClickListener(manufacturer), manufacturer)
+                bind(createOnClickListener(wkda), wkda.name)
             }
         }
     }
@@ -32,9 +33,9 @@ class ManufacturerAdapter : ListAdapter<String, ManufacturerAdapter.ViewHolder>(
         )
     }
 
-    private fun createOnClickListener(manufacturer: String): View.OnClickListener {
+    private fun createOnClickListener(wkda: WKDA): View.OnClickListener {
         return View.OnClickListener {
-            val direction = ManufacturerDirections.actionManufacturerToCarTypes(manufacturer)
+            val direction = ManufacturerDirections.actionManufacturerToCarTypes(wkda)
             it.findNavController().navigate(direction)
         }
     }
@@ -52,19 +53,19 @@ class ManufacturerAdapter : ListAdapter<String, ManufacturerAdapter.ViewHolder>(
     }
 }
 
-private class ManufacturerDiffCallback : DiffUtil.ItemCallback<String>() {
+private class ManufacturerDiffCallback : DiffUtil.ItemCallback<WKDA>() {
 
     override fun areItemsTheSame(
-        oldItem: String,
-        newItem: String
+        oldItem: WKDA,
+        newItem: WKDA
     ): Boolean {
-        return oldItem == newItem
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(
-        oldItem: String,
-        newItem: String
+        oldItem: WKDA,
+        newItem: WKDA
     ): Boolean {
-        return oldItem == newItem
+        return oldItem.id == newItem.id
     }
 }
