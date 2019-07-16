@@ -10,22 +10,31 @@
         <variable
             name="manufacturer"
             type="String"/>
+
+        <variable
+            name="color"
+            type="Integer"/>
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{listener}">
+        android:onClick="@{listener}"
+        android:background="@{color}">
 
         <TextView
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{manufacturer}"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_margin="@dimen/twenty_dp"
-            tools:text="This is my text"
-            android:layoutAnimation="@anim/nav_default_enter_anim" />
+            android:layout_marginTop="20dp"
+            android:layoutAnimation="@anim/nav_default_enter_anim"
+            android:text="@{manufacturer}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="20dp"
+            tools:text="This is my text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

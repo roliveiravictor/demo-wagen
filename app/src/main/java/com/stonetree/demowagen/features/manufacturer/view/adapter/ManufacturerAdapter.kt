@@ -1,5 +1,6 @@
 package com.stonetree.demowagen.features.manufacturer.view.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,9 +20,13 @@ class ManufacturerAdapter : ListAdapter<WKDA, ManufacturerAdapter.ViewHolder>(Ma
         getItem(position).let { wkda ->
             with(holder) {
                 itemView.tag = position
-                bind(createOnClickListener(wkda), wkda.name)
+                bind(createOnClickListener(wkda), wkda.name, getRowColor(position))
             }
         }
+    }
+
+    private fun getRowColor(position: Int): Int {
+        return if (position % 2 == 0) Color.LTGRAY else Color.WHITE
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -44,10 +49,11 @@ class ManufacturerAdapter : ListAdapter<WKDA, ManufacturerAdapter.ViewHolder>(Ma
         private val binding: ListItemManufacturerBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(listener: View.OnClickListener, manufacturer: String) {
+        fun bind(listener: View.OnClickListener, manufacturer: String, color: Int) {
             with(binding) {
                 this.listener = listener
                 this.manufacturer = manufacturer
+                this.color = color
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.stonetree.demowagen.features.cartypes.view.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,9 +20,13 @@ class CarTypesAdapter : ListAdapter<String, CarTypesAdapter.ViewHolder>(CarTypes
         getItem(position).let { carType ->
             with(holder) {
                 itemView.tag = position
-                bind(createOnClickListener(carType), carType)
+                bind(createOnClickListener(carType), carType, getRowColor(position))
             }
         }
+    }
+
+    private fun getRowColor(position: Int): Int {
+        return if (position % 2 == 0) Color.LTGRAY else Color.WHITE
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -44,10 +49,11 @@ class CarTypesAdapter : ListAdapter<String, CarTypesAdapter.ViewHolder>(CarTypes
         private val binding: ListItemCarTypeBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(listener: View.OnClickListener, carType: String) {
+        fun bind(listener: View.OnClickListener, carType: String, color: Int) {
             with(binding) {
                 this.listener = listener
                 this.carType = carType
+                this.color = color
             }
         }
     }
