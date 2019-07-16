@@ -37,7 +37,8 @@ class CarTypesView : CoreView() {
 
     override fun setTitle(key: String) {
         activity?.let { fragment ->
-            fragment.title = (arguments?.getSerializable(key) as WKDA).name
+            fragment.title = ""
+            fragment.title = fragment.title.toString().plus(" " + (arguments?.getSerializable(key) as WKDA).name)
         }
     }
 
