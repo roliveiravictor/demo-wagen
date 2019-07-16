@@ -4,16 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".features.cartypes.view.CarTypesView">
 
-    <data>
-        <variable
-            name="vm"
-            type="com.stonetree.demowagen.features.cartypes.viewmodel.CarTypesViewModel"/>
-
-        <variable
-            name="view"
-            type="com.stonetree.demowagen.features.cartypes.view.CarTypesView"/>
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -24,13 +14,13 @@
             layout="@layout/view_loading" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/car_types_list"
+            android:id="@+id/built_dates_list"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/list_item_car_type"/>
+            tools:listitem="@layout/list_item_built_dates"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

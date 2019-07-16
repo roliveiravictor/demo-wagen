@@ -2,7 +2,7 @@ package com.stonetree.demowagen.constants
 
 object DirectionsBundleKey {
 
-    const val MANUFACTURERS = "carTypes"
-    const val CAR_TYPES = "car_types"
+    const val MANUFACTURER: String = "manufacturer"
+    const val CAR_TYPES: String = "main-type"
 
 }

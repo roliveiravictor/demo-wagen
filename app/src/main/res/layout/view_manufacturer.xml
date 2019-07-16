@@ -3,16 +3,16 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".manufacturer.view.ManufacturerView">
+    tools:context=".features.manufacturer.view.ManufacturerView">
 
     <data>
         <variable
             name="vm"
-            type="com.stonetree.demowagen.manufacturer.viewmodel.ManufacturerViewModel"/>
+            type="com.stonetree.demowagen.features.manufacturer.viewmodel.ManufacturerViewModel"/>
 
         <variable
             name="view"
-            type="com.stonetree.demowagen.manufacturer.view.ManufacturerView"/>
+            type="com.stonetree.demowagen.features.manufacturer.view.ManufacturerView"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

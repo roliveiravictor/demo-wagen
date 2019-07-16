@@ -1,6 +1,8 @@
 package com.stonetree.coreview
 
-internal interface CoreViewInterface {
+interface CoreViewInterface {
+
+    fun setTitle(key: String)
 
     fun showLoading()
 
