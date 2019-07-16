@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.stonetree.demowagen.R
 import com.stonetree.demowagen.features.cartypes.resources.directions.CarTypesDirections
 import com.stonetree.demowagen.databinding.ListItemCarTypeBinding
+import com.stonetree.demowagen.features.cartypes.view.CarTypesView
 
 class CarTypesAdapter : ListAdapter<String, CarTypesAdapter.ViewHolder>(CarTypesDiffCallback()) {
 

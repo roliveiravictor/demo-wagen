@@ -9,9 +9,10 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
-class CarTypesViewModel: ViewModel() {
-
-    private val repository = CarTypesRepository.getInstance()
+class CarTypesViewModel(
+    private val manufacturerId: String,
+    repository: CarTypesRepository
+): ViewModel() {
 
     var carTypes: MutableLiveData<List<String>> = MutableLiveData()
 
@@ -27,7 +28,7 @@ class CarTypesViewModel: ViewModel() {
 
     init {
         viewModelScope.launch {
-            repository.getCarTypes(carTypes)
+            repository.getCarTypes(manufacturerId, carTypes)
         }
     }
 }

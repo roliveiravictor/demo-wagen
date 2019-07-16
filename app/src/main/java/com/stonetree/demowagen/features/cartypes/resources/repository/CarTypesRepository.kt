@@ -20,9 +20,9 @@ class CarTypesRepository {
             }
     }
 
-    suspend fun getCarTypes(data: MutableLiveData<List<String>>) {
+    suspend fun getCarTypes(manufacturerId: String, data: MutableLiveData<List<String>>) {
         val api = CoreRepository.retrofit.create(CarTypesApi::class.java)
-        val request: Call<CarTypesResponse> = api.getCarTypes()
+        val request: Call<CarTypesResponse> = api.getCarTypes(manufacturerId)
         withContext(Dispatchers.IO) {
             request.enqueue {
                 onResponse = { response ->

@@ -13,7 +13,7 @@ interface CarTypesApi {
     @GET(Endpoint.CAR_TYPES_PATH)
     fun getCarTypes(
         @Query(CoreRepositoryConstant.WA_KEY) key: String = CoreRepositoryConstant.WA_VALUE,
-        @Query(DirectionsBundleKey.MANUFACTURER) manufacturer: String = "107"
+        @Query(DirectionsBundleKey.MANUFACTURER) manufacturer: String = ""
     ): Call<CarTypesResponse>
 
 }
