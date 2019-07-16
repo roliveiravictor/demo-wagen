@@ -33,7 +33,7 @@ class ManufacturerView : CoreView() {
         adapter: ManufacturerAdapter
     ) {
         container.view = this@ManufacturerView
-        container.wagenList.adapter = adapter
+        container.manufacturerList.adapter = adapter
     }
 
     private fun bindObservers(

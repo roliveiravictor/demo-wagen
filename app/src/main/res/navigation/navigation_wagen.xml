@@ -25,5 +25,10 @@
             android:name="manufacturer"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/built_dates_view"
+        android:name="com.stonetree.demowagen.BuiltDates"
+        android:label="fragment_built_dates"
+        tools:layout="@layout/fragment_built_dates" />
 
 </navigation>

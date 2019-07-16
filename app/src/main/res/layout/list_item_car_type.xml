@@ -1,0 +1,32 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="listener"
+            type="android.view.View.OnClickListener"/>
+
+        <variable
+            name="carType"
+            type="String"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{listener}">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{carType}"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="@dimen/twenty_dp"
+            tools:text="This is my text"
+            android:layoutAnimation="@anim/nav_default_enter_anim" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
