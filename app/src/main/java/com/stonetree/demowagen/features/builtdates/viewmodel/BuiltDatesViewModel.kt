@@ -1,6 +1,5 @@
 package com.stonetree.demowagen.features.builtdates.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,10 +14,6 @@ class BuiltDatesViewModel(
 ): ViewModel() {
 
     var builtDates: MutableLiveData<List<String>> = MutableLiveData()
-
-    fun getBuiltDates(): LiveData<List<String>> {
-        return builtDates
-    }
 
     @ExperimentalCoroutinesApi
     override fun onCleared() {

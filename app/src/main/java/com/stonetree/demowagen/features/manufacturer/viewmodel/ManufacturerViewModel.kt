@@ -13,9 +13,7 @@ class ManufacturerViewModel : ViewModel() {
 
     var manufacturers: MutableLiveData<List<WKDA>> = MutableLiveData()
 
-    fun getManufacturers(): LiveData<List<WKDA>> {
-        return manufacturers
-    }
+    var hasManufacturers: MutableLiveData<Boolean> = MutableLiveData()
 
     @ExperimentalCoroutinesApi
     override fun onCleared() {
@@ -26,6 +24,7 @@ class ManufacturerViewModel : ViewModel() {
     init {
         viewModelScope.launch {
             repository.getManufacturers(manufacturers)
+            hasManufacturers.postValue(manufacturers.value.isNullOrEmpty())
         }
     }
 }

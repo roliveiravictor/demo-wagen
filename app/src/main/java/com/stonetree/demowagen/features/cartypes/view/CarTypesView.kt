@@ -31,7 +31,7 @@ class CarTypesView : CoreView() {
 
         setTitle(DirectionsBundleKey.WKDA)
         bindData(container, adapter)
-        bindObservers(vm, adapter)
+        bindObservers(adapter)
         return container.root
     }
 
@@ -50,11 +50,8 @@ class CarTypesView : CoreView() {
         container.carTypesList.adapter = adapter
     }
 
-    private fun bindObservers(
-        vm: CarTypesViewModel,
-        adapter: CarTypesAdapter
-    ) {
-        vm.getCarTypes().observe(this@CarTypesView) { carTypes ->
+    private fun bindObservers(adapter: CarTypesAdapter) {
+        vm.carTypes.observe(viewLifecycleOwner) { carTypes ->
             adapter.submitList(carTypes)
         }
     }

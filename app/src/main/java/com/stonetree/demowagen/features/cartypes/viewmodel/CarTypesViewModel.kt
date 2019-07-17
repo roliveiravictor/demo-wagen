@@ -1,5 +1,6 @@
 package com.stonetree.demowagen.features.cartypes.viewmodel
 
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,10 +17,6 @@ class CarTypesViewModel(
 ): ViewModel() {
 
     var carTypes: MutableLiveData<List<String>> = MutableLiveData()
-
-    fun getCarTypes(): LiveData<List<String>> {
-        return carTypes
-    }
 
     @ExperimentalCoroutinesApi
     override fun onCleared() {

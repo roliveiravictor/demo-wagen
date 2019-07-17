@@ -19,9 +19,11 @@
         android:layout_height="match_parent">
 
         <include
+            android:id="@+id/loading"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            layout="@layout/view_loading" />
+            android:layout_height="fill_parent"
+            layout="@layout/view_loading"
+            app:isGone="@{vm.carTypes.empty}"  />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/car_types_list"

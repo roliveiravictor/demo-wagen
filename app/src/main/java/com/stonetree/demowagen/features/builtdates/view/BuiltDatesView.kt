@@ -30,7 +30,7 @@ class BuiltDatesView : CoreView() {
 
         setTitle(CAR_TYPES)
         bindData(container, adapter)
-        bindObservers(vm, adapter)
+        bindObservers(adapter)
         return container.root
     }
 
@@ -48,11 +48,8 @@ class BuiltDatesView : CoreView() {
         container.builtDatesList.adapter = adapter
     }
 
-    private fun bindObservers(
-        vm: BuiltDatesViewModel,
-        adapter: BuiltDatesAdapter
-    ) {
-        vm.getBuiltDates().observe(this@BuiltDatesView) { builtDates ->
+    private fun bindObservers(adapter: BuiltDatesAdapter) {
+        vm.builtDates.observe(viewLifecycleOwner) { builtDates ->
             adapter.submitList(builtDates)
         }
     }

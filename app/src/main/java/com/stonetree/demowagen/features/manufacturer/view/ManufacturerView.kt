@@ -24,7 +24,7 @@ class ManufacturerView : CoreView() {
         val adapter = ManufacturerAdapter()
 
         bindData(container, adapter)
-        bindObservers(vm, adapter)
+        bindObservers(container)
         return container.root
     }
 
@@ -36,12 +36,21 @@ class ManufacturerView : CoreView() {
         container.manufacturerList.adapter = adapter
     }
 
-    private fun bindObservers(
-        vm: ManufacturerViewModel,
-        adapter: ManufacturerAdapter
-    ) {
-        vm.getManufacturers().observe(this@ManufacturerView) { manufacturers ->
+    private fun bindObservers(container: ViewManufacturerBinding) {
+        vm.manufacturers.observe(viewLifecycleOwner) { manufacturers ->
+            container.manufacturerList.visibility = View.VISIBLE
+            container.loading.visibility = View.GONE
+            val adapter = container.manufacturerList.adapter as ManufacturerAdapter
             adapter.submitList(manufacturers)
         }
+//        vm.hasManufacturers.observe(viewLifecycleOwner) { hasManufacturers ->
+//            if (hasManufacturers) {
+//                container.manufacturerList.visibility = View.VISIBLE
+//                container.loading.visibility = View.GONE
+//            } else {
+//                container.manufacturerList.visibility = View.GONE
+//                container.loading.visibility = View.VISIBLE
+//            }
+//        }
     }
 }

@@ -13,16 +13,12 @@
         <variable
             name="view"
             type="com.stonetree.demowagen.features.manufacturer.view.ManufacturerView"/>
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <include
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            layout="@layout/view_loading" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/manufacturer_list"
@@ -31,7 +27,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/list_item_manufacturer"/>
+            tools:listitem="@layout/list_item_manufacturer"
+            android:visibility="gone"/>
+
+        <include
+            android:id="@+id/loading"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            layout="@layout/view_loading"
+            android:visibility="visible"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
