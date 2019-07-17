@@ -2,21 +2,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- android:onClick="@{listener}" -->
+    <data>
+        <variable
+            name="listener"
+            type="android.view.View.OnClickListener"/>
+
+        <variable
+            name="builtDate"
+            type="String"/>
+
+        <variable
+            name="color"
+            type="Integer"/>
+
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
+        android:onClick="@{listener}"
+        android:background="@{color}">
 
-        <!-- android:text="@{manufacturer}" -->
         <TextView
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_margin="@dimen/twenty_dp"
-            tools:text="This is my text"
-            android:layoutAnimation="@anim/nav_default_enter_anim" />
+            android:layoutAnimation="@anim/nav_default_enter_anim"
+            android:text="@{builtDate}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="20dp"
+            tools:text="This is my text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
