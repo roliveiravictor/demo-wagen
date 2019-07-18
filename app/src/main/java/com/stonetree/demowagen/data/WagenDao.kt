@@ -1,13 +1,12 @@
 package com.stonetree.demowagen.data
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
 interface WagenDao {
 
     @Query("SELECT * FROM wagen")
-    fun getWagen(): LiveData<Wagen>
+    fun getWagen(): Wagen
 
     @Query("UPDATE wagen SET manufacturer_id=:manufacturerId")
     fun updateManufacturerId(manufacturerId: Int)

@@ -51,11 +51,9 @@ class CarTypesRepository private constructor(private var wkda: WKDA, private val
         }
     }
 
-    private suspend fun loadWagen() {
-        withContext(Dispatchers.IO) {
-            wagenDao.getWagen().value?.apply {
-                instance?.wagen = this
-            }
+    private fun loadWagen() {
+        wagenDao.getWagen().apply {
+            instance?.wagen = this
         }
     }
 

@@ -20,7 +20,6 @@ class BuiltDatesRepository private constructor(private var carType: String, priv
     private var wagen: Wagen? = null
 
     init {
-        this@BuiltDatesRepository.carType = carType
         CoroutineScope(Dispatchers.IO).launch {
             loadWagen()
         }
@@ -50,11 +49,9 @@ class BuiltDatesRepository private constructor(private var carType: String, priv
         }
     }
 
-    private suspend fun loadWagen() {
-        withContext(Dispatchers.IO) {
-            wagenDao.getWagen().value?.apply {
-                instance?.wagen = this
-            }
+    private fun loadWagen() {
+        wagenDao.getWagen().apply {
+            instance?.wagen = this
         }
     }
 
