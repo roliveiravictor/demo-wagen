@@ -1,2 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.stonetree.corerepository" />
+    package="com.stonetree.corerepository">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+</manifest>
