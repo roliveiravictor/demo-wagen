@@ -18,13 +18,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include
-            android:id="@+id/loading"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            layout="@layout/view_loading"
-            app:isGone="@{vm.builtDates.empty}"   />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/built_dates_list"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -32,8 +25,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/list_item_built_dates"
-            app:isGone="@{!vm.builtDates.empty}"/>
+            tools:listitem="@layout/list_item_built_dates" />
+
+        <include
+            android:id="@+id/loading"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            layout="@layout/view_loading"
+            android:visibility="gone"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

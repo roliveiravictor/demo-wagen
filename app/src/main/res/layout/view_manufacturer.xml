@@ -34,8 +34,7 @@
             android:id="@+id/loading"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            layout="@layout/view_loading"
-            android:visibility="visible"/>
+            layout="@layout/view_loading" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

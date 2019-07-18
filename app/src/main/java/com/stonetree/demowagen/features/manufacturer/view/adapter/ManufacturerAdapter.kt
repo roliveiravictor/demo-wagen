@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.stonetree.demowagen.R
 import com.stonetree.demowagen.databinding.ListItemManufacturerBinding
-import com.stonetree.demowagen.features.manufacturer.model.WKDA
+import com.stonetree.demowagen.data.WKDA
 import com.stonetree.demowagen.features.manufacturer.resources.directions.ManufacturerDirections
 
 class ManufacturerAdapter : ListAdapter<WKDA, ManufacturerAdapter.ViewHolder>(ManufacturerDiffCallback()) {

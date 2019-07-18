@@ -3,27 +3,60 @@ package com.stonetree.demowagen.features.manufacturer.resources.repository
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.stonetree.corerepository.enqueue
+import com.stonetree.demowagen.data.Wagen
+import com.stonetree.demowagen.data.WagenDao
 import com.stonetree.demowagen.features.manufacturer.model.ManufacturerResponse
-import com.stonetree.demowagen.features.manufacturer.model.WKDA
+import com.stonetree.demowagen.data.WKDA
 import com.stonetree.demowagen.features.manufacturer.resources.api.ManufacturerApi
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Response
 import stonetree.com.meals.core.provider.CoreRepository
 
-class ManufacturerRepository {
+class ManufacturerRepository private constructor(val wagenDao: WagenDao){
+
+    private var wagen: Wagen? = null
+
+    init {
+        CoroutineScope(Dispatchers.IO).launch {
+            loadWagen()
+        }
+    }
 
     companion object {
         @Volatile private var instance: ManufacturerRepository? = null
-        fun getInstance() =
+        fun getInstance(wagenDao: WagenDao) =
             instance ?: synchronized(this) {
-                instance ?: ManufacturerRepository().also { instance = it }
+                instance ?: ManufacturerRepository(wagenDao).also {
+                    instance = it }
             }
     }
 
+    suspend fun setTitle(title: MutableLiveData<String>) {
+        withContext(Dispatchers.IO) {
+            wagen?.apply {
+                title.postValue(name.plus(" $carType").plus(" $builtDate"))
+            }
+        }
+    }
+
+    private suspend fun loadWagen() {
+        withContext(Dispatchers.IO) {
+            wagenDao.getWagen().value?.apply {
+                wagen = this
+            }
+        }
+    }
+
     suspend fun getManufacturers(data: MutableLiveData<List<WKDA>>) {
-        val api = CoreRepository.retrofit.create(ManufacturerApi::class.java)
+        val api = CoreRepository
+            .getInstance()
+            .retrofit
+            .create(ManufacturerApi::class.java)
+
         val request: Call<ManufacturerResponse> = api.getManufacturers()
         withContext(Dispatchers.IO) {
             request.enqueue {
@@ -45,7 +78,7 @@ class ManufacturerRepository {
     ) {
         val wkdaList = arrayListOf<WKDA>()
         response.body()?.wkda?.forEach { wkda ->
-            val row = WKDA(wkda.key, wkda.value)
+            val row = WKDA(wkda.key.toInt(), wkda.value)
             wkdaList.add(row)
         }
         data.postValue(wkdaList)

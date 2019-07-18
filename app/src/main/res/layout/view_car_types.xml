@@ -18,13 +18,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include
-            android:id="@+id/loading"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            layout="@layout/view_loading"
-            app:isGone="@{vm.carTypes.empty}"  />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/car_types_list"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -32,7 +25,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/list_item_car_type"/>
+            tools:listitem="@layout/list_item_car_type"
+            android:visibility="gone"/>
+
+        <include
+            android:id="@+id/loading"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            layout="@layout/view_loading" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

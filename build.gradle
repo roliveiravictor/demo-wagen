@@ -14,6 +14,9 @@ buildscript {
         fragmentktx_version = '1.0.0'
         safeargs_version = '1.0.0-alpha11'
         corektx_version = '1.0.2'
+        room_version = '2.1.0'
+        workruntimektx_version = '2.1.0'
+        interceptor_version = '3.12.1'
     }
     repositories {
         google()

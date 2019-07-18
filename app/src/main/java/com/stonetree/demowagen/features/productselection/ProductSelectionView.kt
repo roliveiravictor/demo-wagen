@@ -14,16 +14,6 @@ class ProductSelectionView : CoreView() {
                               savedInstanceState: Bundle?): View? {
 
         val container = ViewProdructSelectionBinding.inflate(inflater, viewGroup, false)
-
-        setTitle(BUILT_DATES)
-
         return container.root
     }
-
-    override fun setTitle(key: String) {
-        activity?.let { fragment ->
-            fragment.title = fragment.title.toString().plus(" " + arguments?.getString(key))
-        }
-    }
-
 }

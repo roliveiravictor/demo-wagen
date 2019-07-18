@@ -1,19 +1,17 @@
 package com.stonetree.demowagen.features.manufacturer.viewmodel
 
 import androidx.lifecycle.*
-import com.stonetree.demowagen.features.manufacturer.model.WKDA
+import com.stonetree.demowagen.data.WKDA
 import com.stonetree.demowagen.features.manufacturer.resources.repository.ManufacturerRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
-class ManufacturerViewModel : ViewModel() {
-
-    private val repository = ManufacturerRepository.getInstance()
+class ManufacturerViewModel(repository: ManufacturerRepository) : ViewModel() {
 
     var manufacturers: MutableLiveData<List<WKDA>> = MutableLiveData()
 
-    var hasManufacturers: MutableLiveData<Boolean> = MutableLiveData()
+    var title: MutableLiveData<String> = MutableLiveData()
 
     @ExperimentalCoroutinesApi
     override fun onCleared() {
@@ -23,8 +21,8 @@ class ManufacturerViewModel : ViewModel() {
 
     init {
         viewModelScope.launch {
+            repository.setTitle(title)
             repository.getManufacturers(manufacturers)
-            hasManufacturers.postValue(manufacturers.value.isNullOrEmpty())
         }
     }
 }

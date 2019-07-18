@@ -8,8 +8,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
 import com.stonetree.coreview.CoreView
-import com.stonetree.demowagen.constants.DirectionsBundleKey.BUILT_DATES
-import com.stonetree.demowagen.constants.DirectionsBundleKey.CAR_TYPES
 import com.stonetree.demowagen.databinding.ViewBuiltDatesBinding
 import com.stonetree.demowagen.features.builtdates.view.adapter.BuiltDatesAdapter
 import com.stonetree.demowagen.features.builtdates.viewmodel.BuiltDatesViewModel
@@ -19,7 +17,7 @@ class BuiltDatesView : CoreView() {
 
     private val args: BuiltDatesViewArgs by navArgs()
     private val vm: BuiltDatesViewModel by viewModels {
-        InjectorUtils.provideBuiltDatesViewModelFactory(args.mainType)
+        InjectorUtils.provideBuiltDatesViewModelFactory(requireContext(), args.mainType)
     }
 
     override fun onCreateView(inflater: LayoutInflater, viewGroup: ViewGroup?,
@@ -28,16 +26,9 @@ class BuiltDatesView : CoreView() {
         val container = ViewBuiltDatesBinding.inflate(inflater, viewGroup, false)
         val adapter = BuiltDatesAdapter()
 
-        setTitle(CAR_TYPES)
         bindData(container, adapter)
-        bindObservers(adapter)
+        bindObservers(container, adapter)
         return container.root
-    }
-
-    override fun setTitle(key: String) {
-        activity?.let { fragment ->
-            fragment.title = fragment.title.toString().plus(" " + arguments?.getString(key))
-        }
     }
 
     private fun bindData(
@@ -48,9 +39,19 @@ class BuiltDatesView : CoreView() {
         container.builtDatesList.adapter = adapter
     }
 
-    private fun bindObservers(adapter: BuiltDatesAdapter) {
+    private fun bindObservers(container: ViewBuiltDatesBinding, adapter: BuiltDatesAdapter) {
         vm.builtDates.observe(viewLifecycleOwner) { builtDates ->
+            adjustVisibility(container)
             adapter.submitList(builtDates)
         }
+
+        vm.title.observe(viewLifecycleOwner) { title ->
+            activity?.title = title
+        }
+    }
+
+    private fun adjustVisibility(container: ViewBuiltDatesBinding) {
+        container.builtDatesList.visibility = View.VISIBLE
+        container.loading.visibility = View.GONE
     }
 }

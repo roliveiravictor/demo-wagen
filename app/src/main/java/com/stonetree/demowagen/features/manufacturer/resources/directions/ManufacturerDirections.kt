@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.navigation.NavDirections
 import com.stonetree.demowagen.R
 import com.stonetree.demowagen.constants.DirectionsBundleKey
-import com.stonetree.demowagen.features.manufacturer.model.WKDA
+import com.stonetree.demowagen.data.WKDA
 
 class ManufacturerDirections private constructor() {
 
