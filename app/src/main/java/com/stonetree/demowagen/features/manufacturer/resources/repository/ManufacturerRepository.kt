@@ -29,10 +29,20 @@ class ManufacturerRepository private constructor(private val wagenDao: WagenDao)
     companion object {
         @Volatile private var instance: ManufacturerRepository? = null
         fun getInstance(wagenDao: WagenDao) =
-            instance ?: synchronized(this) {
+            instance.apply { setup(this) } ?: synchronized(this) {
                 instance ?: ManufacturerRepository(wagenDao).also {
                     instance = it }
+        }
+
+        private fun setup(
+            carTypesRepository: ManufacturerRepository?
+            ) {
+            carTypesRepository?.apply {
+                CoroutineScope(Dispatchers.IO).launch {
+                    loadWagen()
+                }
             }
+        }
     }
 
     suspend fun createWagen() {

@@ -20,20 +20,26 @@ class CarTypesRepository private constructor(private var wkda: WKDA, private val
 
     private var wagen: Wagen? = null
 
-    init {
-        CoroutineScope(Dispatchers.IO).launch {
-            loadWagen()
-        }
-    }
-
     companion object {
         @Volatile private var instance: CarTypesRepository? = null
         fun getInstance(wkda: WKDA, wagenDao: WagenDao) =
-            instance.apply { this?.wkda = wkda } ?: synchronized(this) {
+            instance.apply { setup(this, wkda) } ?: synchronized(this) {
                 instance ?: CarTypesRepository(wkda, wagenDao).also {
                     instance = it
                 }
             }
+
+        private fun setup(
+            carTypesRepository: CarTypesRepository?,
+            wkda: WKDA
+        ) {
+            carTypesRepository?.apply {
+                this.wkda = wkda
+                CoroutineScope(Dispatchers.IO).launch {
+                    loadWagen()
+                }
+            }
+        }
     }
 
     suspend fun saveManufacturer() {

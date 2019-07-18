@@ -28,11 +28,23 @@ class BuiltDatesRepository private constructor(private var carType: String, priv
     companion object {
         @Volatile private var instance: BuiltDatesRepository? = null
         fun getInstance(carType: String, wagenDao: WagenDao) =
-            instance.apply { this?.carType = carType } ?: synchronized(this) {
+            instance.apply { setup(this, carType) } ?: synchronized(this) {
                 instance ?: BuiltDatesRepository(carType, wagenDao).also {
                     instance = it
                 }
             }
+
+        private fun setup(
+            carTypesRepository: BuiltDatesRepository?,
+            carType: String
+        ) {
+            carTypesRepository?.apply {
+                this?.carType = carType
+                CoroutineScope(Dispatchers.IO).launch {
+                    loadWagen()
+                }
+            }
+        }
     }
 
     suspend fun saveCarType() {
