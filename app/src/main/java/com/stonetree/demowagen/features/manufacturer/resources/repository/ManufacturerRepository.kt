@@ -62,7 +62,6 @@ class ManufacturerRepository private constructor(val wagenDao: WagenDao){
             request.enqueue {
                 onResponse = { response ->
                     parse(response, data)
-                    Log.i(javaClass.name, response.body().toString())
                 }
 
                 onFailure = { error ->

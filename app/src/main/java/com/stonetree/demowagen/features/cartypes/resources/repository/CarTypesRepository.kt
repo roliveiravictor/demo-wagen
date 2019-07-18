@@ -70,7 +70,6 @@ class CarTypesRepository private constructor(val wkda: WKDA, val wagenDao: Wagen
             request.enqueue {
                 onResponse = { response ->
                     parse(response, data)
-                    Log.i(javaClass.name, response.body().toString())
                 }
 
                 onFailure = { error ->

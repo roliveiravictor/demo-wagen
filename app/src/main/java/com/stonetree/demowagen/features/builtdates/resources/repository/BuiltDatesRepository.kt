@@ -68,7 +68,6 @@ class BuiltDatesRepository private constructor(val carType: String, val wagenDao
             request.enqueue {
                 onResponse = { response ->
                     parse(response, data)
-                    Log.i(javaClass.name, response.body().toString())
                 }
 
                 onFailure = { error ->
