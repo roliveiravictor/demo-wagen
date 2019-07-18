@@ -9,6 +9,8 @@ import com.stonetree.demowagen.features.cartypes.viewmodel.CarTypesViewModelFact
 import com.stonetree.demowagen.data.WKDA
 import com.stonetree.demowagen.features.manufacturer.model.ManufacturerViewModelFactory
 import com.stonetree.demowagen.features.manufacturer.resources.repository.ManufacturerRepository
+import com.stonetree.demowagen.features.productselection.resources.repository.ProductSelectionRepository
+import com.stonetree.demowagen.features.productselection.viewmodel.ProductSelectionViewModelFactory
 
 object InjectorUtils {
 
@@ -34,5 +36,15 @@ object InjectorUtils {
     ): BuiltDatesViewModelFactory {
         return BuiltDatesViewModelFactory(BuiltDatesRepository.getInstance(carType,
             WagenDatabase.getInstance(context.applicationContext).wagenDao()))
+    }
+
+    fun provideProductSelectionViewModelFactory(
+        context: Context
+    ): ProductSelectionViewModelFactory {
+        return ProductSelectionViewModelFactory(
+            ProductSelectionRepository.getInstance(
+                WagenDatabase.getInstance(context.applicationContext).wagenDao()
+            )
+        )
     }
 }

@@ -2,12 +2,16 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".features.productselection.ProductSelectionView">
+    tools:context=".features.productselection.view.ProductSelectionView">
 
     <data>
         <variable
+            name="vm"
+            type="com.stonetree.demowagen.features.productselection.viewmodel.ProductSelectionViewModel"/>
+
+        <variable
             name="view"
-            type="com.stonetree.demowagen.features.productselection.ProductSelectionView"/>
+            type="com.stonetree.demowagen.features.productselection.view.ProductSelectionView"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,13 +19,37 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/manufacturer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/product_purchased"
+            app:layout_constraintBottom_toTopOf="@+id/car_type"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Manufacturer"
+            android:text="@{vm.wagen.name}"/>
+
+        <TextView
+            android:id="@+id/car_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Car Type"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@{vm.wagen.carType}"/>
+
+        <TextView
+            android:id="@+id/built_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Built Date"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/car_type"
+            android:text="@{vm.wagen.builtDate}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

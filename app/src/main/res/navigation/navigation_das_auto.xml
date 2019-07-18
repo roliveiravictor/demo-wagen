@@ -50,7 +50,7 @@
 
     <fragment
         android:id="@+id/product_selection"
-        android:name="com.stonetree.demowagen.features.productselection.ProductSelectionView"
+        android:name="com.stonetree.demowagen.features.productselection.view.ProductSelectionView"
         android:label="fragment_product_selection"
         tools:layout="@layout/view_prodruct_selection">
         <argument
