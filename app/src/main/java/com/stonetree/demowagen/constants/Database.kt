@@ -3,7 +3,6 @@ package com.stonetree.demowagen.constants
 object Database {
 
     const val DATABASE_NAME = "wagen-db"
-    const val WAGEN_FILE = "wagen.json"
 
     const val WAGEN_TABLE = "wagen"
     const val WAGEN_PK = "pk"

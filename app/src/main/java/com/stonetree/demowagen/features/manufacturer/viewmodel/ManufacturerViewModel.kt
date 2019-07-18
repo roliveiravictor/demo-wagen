@@ -21,6 +21,7 @@ class ManufacturerViewModel(repository: ManufacturerRepository) : ViewModel() {
 
     init {
         viewModelScope.launch {
+            repository.createWagen()
             repository.setTitle(title)
             repository.getManufacturers(manufacturers)
         }

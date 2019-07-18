@@ -35,6 +35,12 @@ class ManufacturerRepository private constructor(private val wagenDao: WagenDao)
             }
     }
 
+    suspend fun createWagen() {
+        withContext(Dispatchers.IO) {
+            wagenDao.insert(Wagen(-1, "", "", ""))
+        }
+    }
+
     suspend fun setTitle(title: MutableLiveData<String>) {
         withContext(Dispatchers.IO) {
             instance?.wagen?.apply {

@@ -21,5 +21,5 @@ interface WagenDao {
     fun updateBuiltDate(builtDate: String)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(wagen: List<Wagen>)
+    fun insert(wagen: Wagen)
 }
