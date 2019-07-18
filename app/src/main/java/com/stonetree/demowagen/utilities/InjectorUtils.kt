@@ -15,7 +15,9 @@ object InjectorUtils {
     fun provideManufacturerViewModelFactory(
         context: Context
     ): ManufacturerViewModelFactory {
-        return ManufacturerViewModelFactory(ManufacturerRepository.getInstance(WagenDatabase.getInstance(context.applicationContext).wagenDao()))
+        return ManufacturerViewModelFactory(ManufacturerRepository.getInstance(
+            WagenDatabase.getInstance(context.applicationContext).wagenDao())
+        )
     }
 
     fun provideCarTypesViewModelFactory(

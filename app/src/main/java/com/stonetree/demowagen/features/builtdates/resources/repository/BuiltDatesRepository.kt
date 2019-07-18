@@ -15,11 +15,12 @@ import retrofit2.Call
 import retrofit2.Response
 import stonetree.com.meals.core.provider.CoreRepository
 
-class BuiltDatesRepository private constructor(val carType: String, val wagenDao: WagenDao) {
+class BuiltDatesRepository private constructor(private var carType: String, private val wagenDao: WagenDao) {
 
     private var wagen: Wagen? = null
 
     init {
+        this@BuiltDatesRepository.carType = carType
         CoroutineScope(Dispatchers.IO).launch {
             loadWagen()
         }
@@ -28,7 +29,7 @@ class BuiltDatesRepository private constructor(val carType: String, val wagenDao
     companion object {
         @Volatile private var instance: BuiltDatesRepository? = null
         fun getInstance(carType: String, wagenDao: WagenDao) =
-            instance ?: synchronized(this) {
+            instance.apply { this?.carType = carType } ?: synchronized(this) {
                 instance ?: BuiltDatesRepository(carType, wagenDao).also {
                     instance = it
                 }
@@ -37,13 +38,13 @@ class BuiltDatesRepository private constructor(val carType: String, val wagenDao
 
     suspend fun saveCarType() {
         withContext(Dispatchers.IO) {
-            wagenDao.updateCarType(carType)
+            wagenDao?.updateCarType(carType)
         }
     }
 
     suspend fun setTitle(title: MutableLiveData<String>) {
         withContext(Dispatchers.IO) {
-            wagen?.apply {
+            instance?.wagen?.apply {
                 title.postValue(name.plus(" $carType").plus(" $builtDate"))
             }
         }
@@ -52,7 +53,7 @@ class BuiltDatesRepository private constructor(val carType: String, val wagenDao
     private suspend fun loadWagen() {
         withContext(Dispatchers.IO) {
             wagenDao.getWagen().value?.apply {
-                wagen = this
+                instance?.wagen = this
             }
         }
     }

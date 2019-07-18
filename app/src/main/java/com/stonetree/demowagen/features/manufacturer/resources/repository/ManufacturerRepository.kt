@@ -16,7 +16,7 @@ import retrofit2.Call
 import retrofit2.Response
 import stonetree.com.meals.core.provider.CoreRepository
 
-class ManufacturerRepository private constructor(val wagenDao: WagenDao){
+class ManufacturerRepository private constructor(private val wagenDao: WagenDao){
 
     private var wagen: Wagen? = null
 
@@ -37,7 +37,7 @@ class ManufacturerRepository private constructor(val wagenDao: WagenDao){
 
     suspend fun setTitle(title: MutableLiveData<String>) {
         withContext(Dispatchers.IO) {
-            wagen?.apply {
+            instance?.wagen?.apply {
                 title.postValue(name.plus(" $carType").plus(" $builtDate"))
             }
         }
@@ -46,7 +46,7 @@ class ManufacturerRepository private constructor(val wagenDao: WagenDao){
     private suspend fun loadWagen() {
         withContext(Dispatchers.IO) {
             wagenDao.getWagen().value?.apply {
-                wagen = this
+                instance?.wagen = this
             }
         }
     }
