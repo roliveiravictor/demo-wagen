@@ -8,7 +8,7 @@ import com.stonetree.demowagen.constants.DirectionsBundleKey.BUILT_DATES
 class BuiltDatesDirections private constructor() {
 
     private data class ActionBuiltDatesToProductSelection(val date: String) : NavDirections {
-        override fun getActionId(): Int = R.id.product_selection
+        override fun getActionId(): Int = R.id.product_selection_view
 
         override fun getArguments(): Bundle {
             val result = Bundle()

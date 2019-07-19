@@ -3,11 +3,11 @@ package com.stonetree.demowagen.features.cartypes.resources.repository
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.stonetree.corerepository.enqueue
-import com.stonetree.demowagen.data.Wagen
-import com.stonetree.demowagen.data.WagenDao
 import com.stonetree.demowagen.features.cartypes.model.CarTypesResponse
 import com.stonetree.demowagen.features.cartypes.resources.api.CarTypesApi
 import com.stonetree.demowagen.data.WKDA
+import com.stonetree.demowagen.data.Wagen
+import com.stonetree.demowagen.data.WagenDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,34 +16,40 @@ import retrofit2.Call
 import retrofit2.Response
 import stonetree.com.meals.core.provider.CoreRepository
 
-class CarTypesRepository private constructor(private var wkda: WKDA, private val wagenDao: WagenDao){
+class CarTypesRepository private constructor(private val wagenDao: WagenDao) {
 
-    private var wagen: Wagen? = null
+    private lateinit var wagen: Wagen
+    private lateinit var wkda: WKDA
+
+    init {
+        CoroutineScope(Dispatchers.IO).launch {
+            loadWagen()
+        }
+    }
 
     companion object {
-        @Volatile private var instance: CarTypesRepository? = null
-        fun getInstance(wkda: WKDA, wagenDao: WagenDao) =
-            instance.apply { setup(this, wkda) } ?: synchronized(this) {
-                instance ?: CarTypesRepository(wkda, wagenDao).also {
-                    instance = it
-                }
-            }
+        @Volatile
+        private var instance: CarTypesRepository? = null
 
-        private fun setup(
-            carTypesRepository: CarTypesRepository?,
-            wkda: WKDA
-        ) {
-            carTypesRepository?.apply {
-                this.wkda = wkda
-                CoroutineScope(Dispatchers.IO).launch {
-                    loadWagen()
+        fun getInstance(wagenDao: WagenDao): CarTypesRepository {
+            return instance ?: synchronized(this) {
+                CarTypesRepository(wagenDao).also {
+                    instance = it
                 }
             }
         }
     }
 
-    suspend fun saveManufacturer() {
+    suspend fun clear() {
         withContext(Dispatchers.IO) {
+            wagenDao.updateManufacturerId(-1)
+            wagenDao.updateManufacturerName("")
+        }
+    }
+
+    suspend fun saveManufacturer(wkda: WKDA) {
+        withContext(Dispatchers.IO) {
+            instance?.wkda = wkda
             wagenDao.updateManufacturerId(wkda.id)
             wagenDao.updateManufacturerName(wkda.name)
         }
@@ -51,7 +57,8 @@ class CarTypesRepository private constructor(private var wkda: WKDA, private val
 
     suspend fun setTitle(title: MutableLiveData<String>) {
         withContext(Dispatchers.IO) {
-            instance?.wagen?.apply {
+            loadWagen()
+            wagen?.apply {
                 title.postValue(name.plus(" $carType").plus(" $builtDate"))
             }
         }
@@ -59,15 +66,12 @@ class CarTypesRepository private constructor(private var wkda: WKDA, private val
 
     private fun loadWagen() {
         wagenDao.getWagen().apply {
-            instance?.wagen = this
+            wagen = this.first()
         }
     }
 
     suspend fun getCarTypes(data: MutableLiveData<List<String>>) {
-        val api = CoreRepository.
-            getInstance().
-            retrofit.
-            create(CarTypesApi::class.java)
+        val api = CoreRepository.getInstance().retrofit.create(CarTypesApi::class.java)
 
         val request: Call<CarTypesResponse> = api.getCarTypes(id = wkda.id)
         withContext(Dispatchers.IO) {

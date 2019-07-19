@@ -22,7 +22,7 @@ data class Wagen (
     @ColumnInfo(name = CAR_TYPE_COLUMN) val carType: String,
     @ColumnInfo(name = BUILT_DATE_COLUMN) val builtDate: String
 ) {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = WAGEN_PK)
     var id: Long = 0
 }

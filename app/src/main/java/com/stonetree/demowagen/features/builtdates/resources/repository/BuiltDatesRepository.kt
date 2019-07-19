@@ -27,19 +27,20 @@ class BuiltDatesRepository private constructor(private var carType: String, priv
 
     companion object {
         @Volatile private var instance: BuiltDatesRepository? = null
-        fun getInstance(carType: String, wagenDao: WagenDao) =
-            instance.apply { setup(this, carType) } ?: synchronized(this) {
-                instance ?: BuiltDatesRepository(carType, wagenDao).also {
+        fun getInstance(carType: String, wagenDao: WagenDao): BuiltDatesRepository {
+            instance?.apply { setup(this) }
+            return instance ?: synchronized(this) {
+                BuiltDatesRepository(carType, wagenDao).also {
                     instance = it
+                    instance?.carType = carType
                 }
             }
+        }
 
         private fun setup(
-            carTypesRepository: BuiltDatesRepository?,
-            carType: String
+            builtDatesRepository: BuiltDatesRepository
         ) {
-            carTypesRepository?.apply {
-                this?.carType = carType
+            builtDatesRepository?.apply {
                 CoroutineScope(Dispatchers.IO).launch {
                     loadWagen()
                 }
@@ -47,15 +48,21 @@ class BuiltDatesRepository private constructor(private var carType: String, priv
         }
     }
 
+    suspend fun clear() {
+        withContext(Dispatchers.IO) {
+            wagenDao.updateCarType("")
+        }
+    }
+
     suspend fun saveCarType() {
         withContext(Dispatchers.IO) {
-            wagenDao?.updateCarType(carType)
+            wagenDao.updateCarType(carType)
         }
     }
 
     suspend fun setTitle(title: MutableLiveData<String>) {
         withContext(Dispatchers.IO) {
-            instance?.wagen?.apply {
+            wagen?.apply {
                 title.postValue(name.plus(" $carType").plus(" $builtDate"))
             }
         }
@@ -63,7 +70,7 @@ class BuiltDatesRepository private constructor(private var carType: String, priv
 
     private fun loadWagen() {
         wagenDao.getWagen().apply {
-            instance?.wagen = this
+            wagen = this.first()
         }
     }
 

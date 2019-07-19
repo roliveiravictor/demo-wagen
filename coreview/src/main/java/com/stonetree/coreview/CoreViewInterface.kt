@@ -1,3 +1,9 @@
 package com.stonetree.coreview
 
-interface CoreViewInterface
+import androidx.activity.OnBackPressedCallback
+
+interface CoreViewInterface {
+
+    fun onBackPressed(): OnBackPressedCallback
+
+}

@@ -8,9 +8,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
-class BuiltDatesViewModel(
-    repository: BuiltDatesRepository
-): ViewModel() {
+class BuiltDatesViewModel(val repository: BuiltDatesRepository): ViewModel() {
 
     var builtDates: MutableLiveData<List<String>> = MutableLiveData()
 
@@ -22,10 +20,16 @@ class BuiltDatesViewModel(
         viewModelScope.cancel()
     }
 
+    fun clearCurrentStack() {
+        viewModelScope.launch {
+            repository.clear()
+        }
+    }
+
     init {
         viewModelScope.launch {
-            repository.setTitle(title)
             repository.saveCarType()
+            repository.setTitle(title)
             repository.getBuiltDates(builtDates)
         }
     }

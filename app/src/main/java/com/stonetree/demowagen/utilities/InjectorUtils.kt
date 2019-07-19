@@ -26,7 +26,7 @@ object InjectorUtils {
         context: Context,
         wkda: WKDA
     ): CarTypesViewModelFactory {
-        return CarTypesViewModelFactory(CarTypesRepository.getInstance(wkda,
+        return CarTypesViewModelFactory(wkda, CarTypesRepository.getInstance(
             WagenDatabase.getInstance(context.applicationContext).wagenDao()))
     }
 
@@ -39,10 +39,11 @@ object InjectorUtils {
     }
 
     fun provideProductSelectionViewModelFactory(
-        context: Context
+        context: Context,
+        builtDates: String
     ): ProductSelectionViewModelFactory {
         return ProductSelectionViewModelFactory(
-            ProductSelectionRepository.getInstance(
+            ProductSelectionRepository.getInstance(builtDates,
                 WagenDatabase.getInstance(context.applicationContext).wagenDao()
             )
         )

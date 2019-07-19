@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import com.stonetree.coreview.CoreView
+import com.stonetree.demowagen.R
 import com.stonetree.demowagen.databinding.ViewManufacturerBinding
-import com.stonetree.demowagen.features.cartypes.viewmodel.CarTypesViewModel
 import com.stonetree.demowagen.features.manufacturer.view.adapter.ManufacturerAdapter
 import com.stonetree.demowagen.features.manufacturer.viewmodel.ManufacturerViewModel
 import com.stonetree.demowagen.utilities.InjectorUtils
@@ -27,7 +28,20 @@ class ManufacturerView : CoreView() {
 
         bindData(container, adapter)
         bindObservers(container)
+        bindBackPressed()
         return container.root
+    }
+
+    private fun bindBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressed())
+    }
+
+    override fun onBackPressed(): OnBackPressedCallback {
+        return object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+
+            }
+        }
     }
 
     private fun bindData(
@@ -46,7 +60,10 @@ class ManufacturerView : CoreView() {
         }
 
         vm.title.observe(viewLifecycleOwner) { title ->
-            activity?.title = title
+            if(title.isBlank())
+                activity?.title = getString(R.string.app_name)
+            else
+                activity?.title = title
         }
     }
 

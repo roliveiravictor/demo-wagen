@@ -8,27 +8,47 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class ProductSelectionRepository private constructor(private val wagenDao: WagenDao){
+class ProductSelectionRepository private constructor(private var builtDates: String, private val wagenDao: WagenDao){
 
     private var wagen: Wagen? = null
 
     companion object {
         @Volatile private var instance: ProductSelectionRepository? = null
-        fun getInstance(wagenDao: WagenDao) =
-            instance.apply { setup(this) } ?: synchronized(this) {
-                instance ?: ProductSelectionRepository(wagenDao).also {
+        fun getInstance(builtDates: String, wagenDao: WagenDao) =
+            instance.apply { setup(this, builtDates) } ?: synchronized(this) {
+                instance ?: ProductSelectionRepository(builtDates, wagenDao).also {
                     instance = it
                 }
             }
 
         private fun setup(
-            carTypesRepository: ProductSelectionRepository?
+            carTypesRepository: ProductSelectionRepository?,
+            builtDates: String
         ) {
             carTypesRepository?.apply {
+                this.builtDates = builtDates
                 CoroutineScope(Dispatchers.IO).launch {
                     loadWagen()
                 }
             }
+        }
+    }
+
+    suspend fun clear() {
+        withContext(Dispatchers.IO) {
+            wagenDao.updateBuiltDate("")
+        }
+    }
+
+    private fun loadWagen() {
+        wagenDao.getWagen().apply {
+            instance?.wagen = this.first()
+        }
+    }
+
+    suspend fun saveBuiltDate() {
+        withContext(Dispatchers.IO) {
+            wagenDao.updateBuiltDate(builtDates)
         }
     }
 
@@ -37,12 +57,6 @@ class ProductSelectionRepository private constructor(private val wagenDao: Wagen
             instance?.wagen?.apply {
                 wagen.postValue(this)
             }
-        }
-    }
-
-    private fun loadWagen() {
-        wagenDao.getWagen().apply {
-            instance?.wagen = this
         }
     }
 }

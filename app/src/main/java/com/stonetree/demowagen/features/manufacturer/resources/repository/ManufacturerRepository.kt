@@ -7,6 +7,7 @@ import com.stonetree.demowagen.data.Wagen
 import com.stonetree.demowagen.data.WagenDao
 import com.stonetree.demowagen.features.manufacturer.model.ManufacturerResponse
 import com.stonetree.demowagen.data.WKDA
+import com.stonetree.demowagen.features.cartypes.resources.repository.CarTypesRepository
 import com.stonetree.demowagen.features.manufacturer.resources.api.ManufacturerApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,22 +23,28 @@ class ManufacturerRepository private constructor(private val wagenDao: WagenDao)
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
+            if(wagenDao.getWagen().isEmpty())
+                createWagen()
+
             loadWagen()
         }
     }
 
     companion object {
         @Volatile private var instance: ManufacturerRepository? = null
-        fun getInstance(wagenDao: WagenDao) =
-            instance.apply { setup(this) } ?: synchronized(this) {
-                instance ?: ManufacturerRepository(wagenDao).also {
-                    instance = it }
+        fun getInstance(wagenDao: WagenDao): ManufacturerRepository {
+            instance?.apply { setup(this) }
+            return instance ?: synchronized(this) {
+                ManufacturerRepository(wagenDao).also {
+                    instance = it
+                }
+            }
         }
 
         private fun setup(
-            carTypesRepository: ManufacturerRepository?
+            manufacturerRepository: ManufacturerRepository?
             ) {
-            carTypesRepository?.apply {
+            manufacturerRepository?.apply {
                 CoroutineScope(Dispatchers.IO).launch {
                     loadWagen()
                 }
@@ -53,7 +60,7 @@ class ManufacturerRepository private constructor(private val wagenDao: WagenDao)
 
     suspend fun setTitle(title: MutableLiveData<String>) {
         withContext(Dispatchers.IO) {
-            instance?.wagen?.apply {
+            wagen?.apply {
                 title.postValue(name.plus(" $carType").plus(" $builtDate"))
             }
         }
@@ -61,7 +68,7 @@ class ManufacturerRepository private constructor(private val wagenDao: WagenDao)
 
     private fun loadWagen() {
         wagenDao.getWagen().apply {
-            instance?.wagen = this
+            wagen = this.first()
         }
     }
 

@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.stonetree.coreview.CoreView
+import com.stonetree.demowagen.R
 import com.stonetree.demowagen.databinding.ViewBuiltDatesBinding
 import com.stonetree.demowagen.features.builtdates.view.adapter.BuiltDatesAdapter
 import com.stonetree.demowagen.features.builtdates.viewmodel.BuiltDatesViewModel
@@ -28,7 +31,24 @@ class BuiltDatesView : CoreView() {
 
         bindData(container, adapter)
         bindObservers(container, adapter)
+        bindBackPressed()
         return container.root
+    }
+
+    private fun bindBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressed())
+    }
+
+    override fun onBackPressed(): OnBackPressedCallback {
+        return object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().currentDestination?.id.apply {
+                    if(this == R.id.built_date)
+                        vm.clearCurrentStack()
+                }
+                findNavController().navigate(R.id.car_types_view)
+            }
+        }
     }
 
     private fun bindData(

@@ -7,7 +7,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
-class ManufacturerViewModel(repository: ManufacturerRepository) : ViewModel() {
+class ManufacturerViewModel(val repository: ManufacturerRepository) : ViewModel() {
 
     var manufacturers: MutableLiveData<List<WKDA>> = MutableLiveData()
 

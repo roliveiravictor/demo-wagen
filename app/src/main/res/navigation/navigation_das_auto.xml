@@ -43,13 +43,13 @@
             android:defaultValue="Car Type"/>
         <action
             android:id="@+id/action_built_dates_view_to_productReview"
-            app:destination="@id/product_selection"
+            app:destination="@id/product_selection_view"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
 
     <fragment
-        android:id="@+id/product_selection"
+        android:id="@+id/product_selection_view"
         android:name="com.stonetree.demowagen.features.productselection.view.ProductSelectionView"
         android:label="fragment_product_selection"
         tools:layout="@layout/view_prodruct_selection">
