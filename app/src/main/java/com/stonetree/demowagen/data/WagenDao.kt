@@ -6,7 +6,7 @@ import androidx.room.*
 interface WagenDao {
 
     @Query("SELECT * FROM wagen")
-    fun getWagen(): List<Wagen>
+    fun getWagen(): Wagen
 
     @Query("UPDATE wagen SET manufacturer_id=:manufacturerId")
     fun updateManufacturerId(manufacturerId: String)

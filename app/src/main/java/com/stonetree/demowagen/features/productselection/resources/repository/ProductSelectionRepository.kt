@@ -42,7 +42,7 @@ class ProductSelectionRepository private constructor(private var builtDates: Str
 
     private fun loadWagen() {
         wagenDao.getWagen().apply {
-            instance?.wagen = this.first()
+            instance?.wagen = this
         }
     }
 

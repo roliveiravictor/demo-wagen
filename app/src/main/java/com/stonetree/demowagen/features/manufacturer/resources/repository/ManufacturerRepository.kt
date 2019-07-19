@@ -23,7 +23,7 @@ class ManufacturerRepository private constructor(private val wagenDao: WagenDao)
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
-            if(wagenDao.getWagen().isEmpty())
+            if(wagenDao.getWagen() == null)
                 createWagen()
 
             loadWagen()
@@ -68,7 +68,7 @@ class ManufacturerRepository private constructor(private val wagenDao: WagenDao)
 
     private fun loadWagen() {
         wagenDao.getWagen().apply {
-            wagen = this.first()
+            wagen = this
         }
     }
 

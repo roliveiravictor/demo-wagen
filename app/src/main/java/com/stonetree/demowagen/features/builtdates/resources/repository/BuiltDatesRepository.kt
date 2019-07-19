@@ -70,7 +70,7 @@ class BuiltDatesRepository private constructor(private var carType: String, priv
 
     private fun loadWagen() {
         wagenDao.getWagen().apply {
-            wagen = this.first()
+            wagen = this
         }
     }
 
