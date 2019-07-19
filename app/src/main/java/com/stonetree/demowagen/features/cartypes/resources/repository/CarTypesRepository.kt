@@ -30,7 +30,6 @@ class CarTypesRepository private constructor(private val wagenDao: WagenDao) {
     companion object {
         @Volatile
         private var instance: CarTypesRepository? = null
-
         fun getInstance(wagenDao: WagenDao) = instance ?: synchronized(this) {
             CarTypesRepository(wagenDao).also {
                 instance = it
@@ -47,9 +46,11 @@ class CarTypesRepository private constructor(private val wagenDao: WagenDao) {
 
     suspend fun saveManufacturer(wkda: WKDA) {
         withContext(Dispatchers.IO) {
-            instance?.wkda = wkda
-            wagenDao.updateManufacturerId(wkda.id)
-            wagenDao.updateManufacturerName(wkda.name)
+            if(wkda.id.isNotEmpty()) {
+                instance?.wkda = wkda
+                wagenDao.updateManufacturerId(wkda.id)
+                wagenDao.updateManufacturerName(wkda.name)
+            }
         }
     }
 
@@ -69,7 +70,10 @@ class CarTypesRepository private constructor(private val wagenDao: WagenDao) {
     }
 
     suspend fun getCarTypes(data: MutableLiveData<List<String>>) {
-        val api = CoreRepository.getInstance().retrofit.create(CarTypesApi::class.java)
+        val api = CoreRepository
+            .getInstance()
+            .retrofit
+            .create(CarTypesApi::class.java)
 
         val request: Call<CarTypesResponse> = api.getCarTypes(id = wkda.id)
         withContext(Dispatchers.IO) {

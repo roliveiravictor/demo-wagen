@@ -34,7 +34,7 @@ object InjectorUtils {
         context: Context,
         carType: String
     ): BuiltDatesViewModelFactory {
-        return BuiltDatesViewModelFactory(BuiltDatesRepository.getInstance(carType,
+        return BuiltDatesViewModelFactory(carType, BuiltDatesRepository.getInstance(
             WagenDatabase.getInstance(context.applicationContext).wagenDao()))
     }
 
@@ -42,8 +42,8 @@ object InjectorUtils {
         context: Context,
         builtDates: String
     ): ProductSelectionViewModelFactory {
-        return ProductSelectionViewModelFactory(
-            ProductSelectionRepository.getInstance(builtDates,
+        return ProductSelectionViewModelFactory(builtDates,
+            ProductSelectionRepository.getInstance(
                 WagenDatabase.getInstance(context.applicationContext).wagenDao()
             )
         )

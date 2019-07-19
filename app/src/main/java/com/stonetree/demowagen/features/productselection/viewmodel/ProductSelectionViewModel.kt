@@ -9,7 +9,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
-class ProductSelectionViewModel(val repository: ProductSelectionRepository) : ViewModel() {
+class ProductSelectionViewModel(val builtDates: String, val repository: ProductSelectionRepository) : ViewModel() {
 
     var wagen: MutableLiveData<Wagen> = MutableLiveData()
 
@@ -27,7 +27,7 @@ class ProductSelectionViewModel(val repository: ProductSelectionRepository) : Vi
 
     init {
         viewModelScope.launch {
-            repository.saveBuiltDate()
+            repository.saveBuiltDate(builtDates)
             repository.setWagen(wagen)
         }
     }

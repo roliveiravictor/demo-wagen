@@ -3,10 +3,13 @@ package com.stonetree.demowagen.features.builtdates.resources.repository
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.stonetree.corerepository.enqueue
+import com.stonetree.demowagen.data.WKDA
 import com.stonetree.demowagen.data.Wagen
 import com.stonetree.demowagen.data.WagenDao
 import com.stonetree.demowagen.features.builtdates.model.BuiltDatesResponse
 import com.stonetree.demowagen.features.builtdates.resources.api.BuiltDatesApi
+import com.stonetree.demowagen.features.cartypes.model.CarTypesResponse
+import com.stonetree.demowagen.features.cartypes.resources.api.CarTypesApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,9 +18,10 @@ import retrofit2.Call
 import retrofit2.Response
 import stonetree.com.meals.core.provider.CoreRepository
 
-class BuiltDatesRepository private constructor(private var carType: String, private val wagenDao: WagenDao) {
+class BuiltDatesRepository private constructor(private val wagenDao: WagenDao) {
 
-    private var wagen: Wagen? = null
+    private lateinit var wagen: Wagen
+    private lateinit var carType: String
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
@@ -26,24 +30,11 @@ class BuiltDatesRepository private constructor(private var carType: String, priv
     }
 
     companion object {
-        @Volatile private var instance: BuiltDatesRepository? = null
-        fun getInstance(carType: String, wagenDao: WagenDao): BuiltDatesRepository {
-            instance?.apply { setup(this) }
-            return instance ?: synchronized(this) {
-                BuiltDatesRepository(carType, wagenDao).also {
-                    instance = it
-                    instance?.carType = carType
-                }
-            }
-        }
-
-        private fun setup(
-            builtDatesRepository: BuiltDatesRepository
-        ) {
-            builtDatesRepository?.apply {
-                CoroutineScope(Dispatchers.IO).launch {
-                    loadWagen()
-                }
+        @Volatile
+        private var instance: BuiltDatesRepository? = null
+        fun getInstance(wagenDao: WagenDao) = instance ?: synchronized(this) {
+            BuiltDatesRepository(wagenDao).also {
+                instance = it
             }
         }
     }
@@ -54,15 +45,19 @@ class BuiltDatesRepository private constructor(private var carType: String, priv
         }
     }
 
-    suspend fun saveCarType() {
+    suspend fun saveCarType(carType: String) {
         withContext(Dispatchers.IO) {
-            wagenDao.updateCarType(carType)
+            if(carType.isNotEmpty()) {
+                instance?.carType = carType
+                wagenDao.updateCarType(carType)
+            }
         }
     }
 
     suspend fun setTitle(title: MutableLiveData<String>) {
         withContext(Dispatchers.IO) {
-            wagen?.apply {
+            loadWagen()
+            wagen.apply {
                 title.postValue(name.plus(" $carType").plus(" $builtDate"))
             }
         }
