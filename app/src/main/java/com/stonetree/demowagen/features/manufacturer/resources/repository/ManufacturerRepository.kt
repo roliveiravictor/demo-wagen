@@ -54,7 +54,7 @@ class ManufacturerRepository private constructor(private val wagenDao: WagenDao)
 
     suspend fun createWagen() {
         withContext(Dispatchers.IO) {
-            wagenDao.insert(Wagen(-1, "", "", ""))
+            wagenDao.insert(Wagen("", "", "", ""))
         }
     }
 
@@ -98,7 +98,7 @@ class ManufacturerRepository private constructor(private val wagenDao: WagenDao)
     ) {
         val wkdaList = arrayListOf<WKDA>()
         response.body()?.wkda?.forEach { wkda ->
-            val row = WKDA(wkda.key.toInt(), wkda.value)
+            val row = WKDA(wkda.key, wkda.value)
             wkdaList.add(row)
         }
         data.postValue(wkdaList)

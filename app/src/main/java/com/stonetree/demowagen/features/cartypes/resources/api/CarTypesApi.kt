@@ -14,7 +14,7 @@ interface CarTypesApi {
     @GET(Endpoint.CAR_TYPES_PATH)
     fun getCarTypes(
         @Query(WA_KEY) key: String = CoreRepositoryConstant.WA_VALUE,
-        @Query(MANUFACTURER) id: Int?
+        @Query(MANUFACTURER) id: String
     ): Call<CarTypesResponse>
 
 }

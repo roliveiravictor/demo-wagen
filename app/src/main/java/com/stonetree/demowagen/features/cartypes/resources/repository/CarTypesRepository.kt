@@ -42,7 +42,7 @@ class CarTypesRepository private constructor(private val wagenDao: WagenDao) {
 
     suspend fun clear() {
         withContext(Dispatchers.IO) {
-            wagenDao.updateManufacturerId(-1)
+            wagenDao.updateManufacturerId("")
             wagenDao.updateManufacturerName("")
         }
     }
@@ -58,7 +58,7 @@ class CarTypesRepository private constructor(private val wagenDao: WagenDao) {
     suspend fun setTitle(title: MutableLiveData<String>) {
         withContext(Dispatchers.IO) {
             loadWagen()
-            wagen?.apply {
+            wagen.apply {
                 title.postValue(name.plus(" $carType").plus(" $builtDate"))
             }
         }

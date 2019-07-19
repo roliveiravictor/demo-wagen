@@ -9,7 +9,7 @@ interface WagenDao {
     fun getWagen(): List<Wagen>
 
     @Query("UPDATE wagen SET manufacturer_id=:manufacturerId")
-    fun updateManufacturerId(manufacturerId: Int)
+    fun updateManufacturerId(manufacturerId: String)
 
     @Query("UPDATE wagen SET manufacturer_name=:name")
     fun updateManufacturerName(name: String)

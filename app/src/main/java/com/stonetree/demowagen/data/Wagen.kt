@@ -17,7 +17,7 @@ import com.stonetree.demowagen.constants.Database.WAGEN_TABLE
     indices = [Index(WAGEN_PK)]
 )
 data class Wagen (
-    @ColumnInfo(name = MANUFACTURER_ID_COLUMN) val manufacturerId: Int,
+    @ColumnInfo(name = MANUFACTURER_ID_COLUMN) val manufacturerId: String,
     @ColumnInfo(name = MANUFACTURER_NAME_COLUMN) val name: String,
     @ColumnInfo(name = CAR_TYPE_COLUMN) val carType: String,
     @ColumnInfo(name = BUILT_DATE_COLUMN) val builtDate: String

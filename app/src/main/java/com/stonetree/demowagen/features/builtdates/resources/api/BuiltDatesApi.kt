@@ -14,7 +14,7 @@ interface BuiltDatesApi {
     @GET(BUILT_DATES_PATH)
     fun getBuiltDates(
         @Query(CoreRepositoryConstant.WA_KEY) key: String = CoreRepositoryConstant.WA_VALUE,
-        @Query(MANUFACTURER) id: Int?,
+        @Query(MANUFACTURER) id: String?,
         @Query(CAR_TYPE) type: String?
     ): Call<BuiltDatesResponse>
 
