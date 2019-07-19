@@ -29,6 +29,7 @@ class ProductSelectionView : CoreView() {
         bindData(container)
         bindObservers(container)
         bindBackPressed()
+        bindTitle()
         return container.root
     }
 
@@ -36,10 +37,6 @@ class ProductSelectionView : CoreView() {
         container: ViewProdructSelectionBinding
     ) {
         container.view = this@ProductSelectionView
-    }
-
-    private fun bindBackPressed() {
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressed())
     }
 
     override fun onBackPressed(): OnBackPressedCallback {
@@ -54,13 +51,17 @@ class ProductSelectionView : CoreView() {
         }
     }
 
-    private fun bindObservers(container: ViewProdructSelectionBinding) {
-        activity?.title = getString(R.string.product_purchased)
+    private fun bindBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressed())
+    }
 
+    private fun bindObservers(container: ViewProdructSelectionBinding) {
         vm.wagen.observe(viewLifecycleOwner) { wagen ->
-            container.manufacturer.text = wagen.name
-            container.carType.text = wagen.carType
-            container.builtDate.text = wagen.builtDate
+            container.wagen = wagen
         }
+    }
+
+    private fun bindTitle() {
+        activity?.title = getString(R.string.product_purchased)
     }
 }

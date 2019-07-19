@@ -6,8 +6,8 @@
 
     <data>
         <variable
-            name="vm"
-            type="com.stonetree.demowagen.features.productselection.viewmodel.ProductSelectionViewModel"/>
+            name="wagen"
+            type="com.stonetree.demowagen.data.Wagen"/>
 
         <variable
             name="view"
@@ -27,7 +27,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Manufacturer"
-            android:text="@{vm.wagen.name}"/>
+            android:text="@{wagen.name}"/>
 
         <TextView
             android:id="@+id/car_type"
@@ -38,7 +38,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@{vm.wagen.carType}"/>
+            android:text="@{wagen.carType}"/>
 
         <TextView
             android:id="@+id/built_date"
@@ -49,7 +49,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/car_type"
-            android:text="@{vm.wagen.builtDate}"/>
+            android:text="@{wagen.builtDate}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

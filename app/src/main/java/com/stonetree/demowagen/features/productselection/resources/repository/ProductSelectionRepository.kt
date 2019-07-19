@@ -3,10 +3,7 @@ package com.stonetree.demowagen.features.productselection.resources.repository
 import androidx.lifecycle.MutableLiveData
 import com.stonetree.demowagen.data.Wagen
 import com.stonetree.demowagen.data.WagenDao
-import com.stonetree.demowagen.features.builtdates.resources.repository.BuiltDatesRepository
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ProductSelectionRepository private constructor(private val wagenDao: WagenDao){
