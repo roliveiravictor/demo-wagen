@@ -26,7 +26,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/list_item_car_type"
-            android:visibility="gone"/>
+            android:layoutAnimation="@anim/list_animation"
+            android:visibility="gone" />
 
         <include
             android:id="@+id/loading"

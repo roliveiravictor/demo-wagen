@@ -25,7 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/list_item_built_dates" />
+            tools:listitem="@layout/list_item_built_dates"
+            android:layoutAnimation="@anim/list_animation"/>
 
         <include
             android:id="@+id/loading"
