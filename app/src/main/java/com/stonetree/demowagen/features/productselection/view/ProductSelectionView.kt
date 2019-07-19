@@ -28,6 +28,7 @@ class ProductSelectionView : CoreView() {
         val container = ViewProdructSelectionBinding.inflate(inflater, viewGroup, false)
         bindData(container)
         bindObservers(container)
+        bindBackPressed()
         return container.root
     }
 

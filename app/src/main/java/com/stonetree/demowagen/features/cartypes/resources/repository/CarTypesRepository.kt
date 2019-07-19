@@ -54,18 +54,19 @@ class CarTypesRepository private constructor(private val wagenDao: WagenDao) {
         }
     }
 
-    suspend fun setTitle(title: MutableLiveData<String>) {
+    suspend fun loadWagen() {
         withContext(Dispatchers.IO) {
-            loadWagen()
-            wagen.apply {
-                title.postValue(name.plus(" $carType").plus(" $builtDate"))
+            wagenDao.getWagen().apply {
+                wagen = this
             }
         }
     }
 
-    private fun loadWagen() {
-        wagenDao.getWagen().apply {
-            wagen = this
+    suspend fun setTitle(title: MutableLiveData<String>) {
+        withContext(Dispatchers.IO) {
+            wagen.apply {
+                title.postValue(name.plus(" $carType").plus(" $builtDate"))
+            }
         }
     }
 

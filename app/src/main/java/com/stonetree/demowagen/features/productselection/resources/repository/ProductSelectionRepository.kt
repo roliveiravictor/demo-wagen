@@ -29,9 +29,11 @@ class ProductSelectionRepository private constructor(private val wagenDao: Wagen
         }
     }
 
-    private fun loadWagen() {
-        wagenDao.getWagen().apply {
-            wagen = this
+    suspend fun loadWagen() {
+        withContext(Dispatchers.IO) {
+            wagenDao.getWagen().apply {
+                wagen = this
+            }
         }
     }
 

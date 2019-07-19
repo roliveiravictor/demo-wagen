@@ -28,6 +28,7 @@ class ProductSelectionViewModel(val builtDates: String, val repository: ProductS
     init {
         viewModelScope.launch {
             repository.saveBuiltDate(builtDates)
+            repository.loadWagen()
             repository.setWagen(wagen)
         }
     }

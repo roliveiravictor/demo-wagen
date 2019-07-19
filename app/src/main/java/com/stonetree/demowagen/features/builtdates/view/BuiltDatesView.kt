@@ -43,7 +43,7 @@ class BuiltDatesView : CoreView() {
         return object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 findNavController().currentDestination?.id.apply {
-                    if(this == R.id.built_date)
+                    if(this == R.id.built_dates_view)
                         vm.clearCurrentStack()
                 }
                 findNavController().navigate(R.id.car_types_view)

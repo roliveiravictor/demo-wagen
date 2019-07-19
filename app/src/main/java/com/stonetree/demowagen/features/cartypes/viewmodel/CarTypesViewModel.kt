@@ -33,6 +33,7 @@ class CarTypesViewModel(
     init {
         viewModelScope.launch {
             repository.saveManufacturer(wkda)
+            repository.loadWagen()
             repository.setTitle(title)
             repository.getCarTypes(carTypes)
         }

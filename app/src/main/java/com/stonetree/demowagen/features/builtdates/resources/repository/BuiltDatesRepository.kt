@@ -51,12 +51,12 @@ class BuiltDatesRepository private constructor(private val wagenDao: WagenDao) {
                 instance?.carType = carType
                 wagenDao.updateCarType(carType)
             }
+            loadWagen()
         }
     }
 
     suspend fun setTitle(title: MutableLiveData<String>) {
         withContext(Dispatchers.IO) {
-            loadWagen()
             wagen.apply {
                 title.postValue(name.plus(" $carType").plus(" $builtDate"))
             }

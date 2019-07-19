@@ -19,7 +19,7 @@ import stonetree.com.meals.core.provider.CoreRepository
 
 class ManufacturerRepository private constructor(private val wagenDao: WagenDao){
 
-    private var wagen: Wagen? = null
+    private lateinit var wagen: Wagen
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
@@ -31,23 +31,11 @@ class ManufacturerRepository private constructor(private val wagenDao: WagenDao)
     }
 
     companion object {
-        @Volatile private var instance: ManufacturerRepository? = null
-        fun getInstance(wagenDao: WagenDao): ManufacturerRepository {
-            instance?.apply { setup(this) }
-            return instance ?: synchronized(this) {
-                ManufacturerRepository(wagenDao).also {
-                    instance = it
-                }
-            }
-        }
-
-        private fun setup(
-            manufacturerRepository: ManufacturerRepository?
-            ) {
-            manufacturerRepository?.apply {
-                CoroutineScope(Dispatchers.IO).launch {
-                    loadWagen()
-                }
+        @Volatile
+        private var instance: ManufacturerRepository? = null
+        fun getInstance(wagenDao: WagenDao) = instance ?: synchronized(this) {
+            ManufacturerRepository(wagenDao).also {
+                instance = it
             }
         }
     }
@@ -60,7 +48,7 @@ class ManufacturerRepository private constructor(private val wagenDao: WagenDao)
 
     suspend fun setTitle(title: MutableLiveData<String>) {
         withContext(Dispatchers.IO) {
-            wagen?.apply {
+            wagen.apply {
                 title.postValue(name.plus(" $carType").plus(" $builtDate"))
             }
         }
