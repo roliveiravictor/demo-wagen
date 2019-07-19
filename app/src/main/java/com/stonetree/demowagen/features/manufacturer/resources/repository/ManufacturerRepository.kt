@@ -54,9 +54,11 @@ class ManufacturerRepository private constructor(private val wagenDao: WagenDao)
         }
     }
 
-    private fun loadWagen() {
-        wagenDao.getWagen().apply {
-            wagen = this
+    suspend fun loadWagen() {
+        withContext(Dispatchers.IO) {
+            wagenDao.getWagen().apply {
+                wagen = this
+            }
         }
     }
 
