@@ -31,11 +31,9 @@ class CarTypesRepository private constructor(private val wagenDao: WagenDao) {
         @Volatile
         private var instance: CarTypesRepository? = null
 
-        fun getInstance(wagenDao: WagenDao): CarTypesRepository {
-            return instance ?: synchronized(this) {
-                CarTypesRepository(wagenDao).also {
-                    instance = it
-                }
+        fun getInstance(wagenDao: WagenDao) = instance ?: synchronized(this) {
+            CarTypesRepository(wagenDao).also {
+                instance = it
             }
         }
     }
@@ -66,7 +64,7 @@ class CarTypesRepository private constructor(private val wagenDao: WagenDao) {
 
     private fun loadWagen() {
         wagenDao.getWagen().apply {
-            wagen = this.first()
+            wagen = this
         }
     }
 
