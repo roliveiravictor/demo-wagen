@@ -39,7 +39,6 @@ class ManufacturerView : CoreView() {
     override fun onBackPressed(): OnBackPressedCallback {
         return object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-
             }
         }
     }
