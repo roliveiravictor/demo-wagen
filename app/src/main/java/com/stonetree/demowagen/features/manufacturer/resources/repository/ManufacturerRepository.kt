@@ -7,7 +7,6 @@ import com.stonetree.demowagen.data.Wagen
 import com.stonetree.demowagen.data.WagenDao
 import com.stonetree.demowagen.features.manufacturer.model.ManufacturerResponse
 import com.stonetree.demowagen.data.WKDA
-import com.stonetree.demowagen.features.cartypes.resources.repository.CarTypesRepository
 import com.stonetree.demowagen.features.manufacturer.resources.api.ManufacturerApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
