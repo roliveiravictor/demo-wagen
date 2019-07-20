@@ -64,7 +64,7 @@ class ManufacturerViewTest {
     }
 
     @Test
-    fun test_manufacturerBundle_ShouldReturnWKDA() {
+    fun test_navigateToCarType_shouldLoadCarTypeFragment() {
         Thread.sleep(5000)
         onView(withId(R.id.manufacturer_list))
             .perform(action {RecyclerViewActions.scrollTo<ViewHolder>(withText("Suzuki"))}, click())

@@ -6,6 +6,10 @@
 
     <data>
         <variable
+            name="hasBuiltDates"
+            type="boolean" />
+
+        <variable
             name="vm"
             type="com.stonetree.demowagen.features.builtdates.viewmodel.BuiltDatesViewModel"/>
 
@@ -26,14 +30,15 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/list_item_built_dates"
-            android:layoutAnimation="@anim/list_animation"/>
+            android:layoutAnimation="@anim/list_animation"
+            app:isGone="@{!hasBuiltDates}"/>
 
         <include
             android:id="@+id/loading"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             layout="@layout/view_loading"
-            android:visibility="gone"/>
+            app:isGone="@{hasBuiltDates}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

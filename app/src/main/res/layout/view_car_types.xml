@@ -6,6 +6,10 @@
 
     <data>
         <variable
+            name="hasCarTypes"
+            type="boolean" />
+
+        <variable
             name="vm"
             type="com.stonetree.demowagen.features.cartypes.viewmodel.CarTypesViewModel"/>
 
@@ -27,13 +31,14 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/list_item_car_type"
             android:layoutAnimation="@anim/list_animation"
-            android:visibility="gone" />
+            app:isGone="@{!hasCarTypes}" />
 
         <include
             android:id="@+id/loading"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            layout="@layout/view_loading" />
+            layout="@layout/view_loading"
+            app:isGone="@{hasCarTypes}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

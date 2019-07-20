@@ -27,7 +27,7 @@ class ManufacturerView : CoreView() {
         val adapter = ManufacturerAdapter()
 
         bindData(container, adapter)
-        bindObservers(container)
+        bindObservers(container, adapter)
         bindBackPressed()
         return container.root
     }
@@ -52,10 +52,9 @@ class ManufacturerView : CoreView() {
         container.manufacturerList.adapter = adapter
     }
 
-    private fun bindObservers(container: ViewManufacturerBinding) {
+    private fun bindObservers(container: ViewManufacturerBinding, adapter: ManufacturerAdapter) {
         vm.manufacturers.observe(viewLifecycleOwner) { manufacturers ->
-            adjustVisibility(container)
-            val adapter = container.manufacturerList.adapter as ManufacturerAdapter
+            container.hasManufacturers = !manufacturers.isNullOrEmpty()
             adapter.submitList(manufacturers)
         }
 
@@ -65,10 +64,5 @@ class ManufacturerView : CoreView() {
             else
                 activity?.title = title
         }
-    }
-
-    private fun adjustVisibility(container: ViewManufacturerBinding) {
-        container.manufacturerList.visibility = View.VISIBLE
-        container.loading.visibility = View.GONE
     }
 }

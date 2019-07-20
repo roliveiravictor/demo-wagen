@@ -7,6 +7,10 @@
 
     <data>
         <variable
+            name="hasManufacturers"
+            type="boolean" />
+
+        <variable
             name="vm"
             type="com.stonetree.demowagen.features.manufacturer.viewmodel.ManufacturerViewModel"/>
 
@@ -29,13 +33,14 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/list_item_manufacturer"
             android:layoutAnimation="@anim/list_animation"
-            android:visibility="gone"/>
+            app:isGone="@{!hasManufacturers}"/>
 
         <include
             android:id="@+id/loading"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            layout="@layout/view_loading" />
+            layout="@layout/view_loading"
+            app:isGone="@{hasManufacturers}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

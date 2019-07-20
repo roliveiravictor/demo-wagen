@@ -61,17 +61,12 @@ class BuiltDatesView : CoreView() {
 
     private fun bindObservers(container: ViewBuiltDatesBinding, adapter: BuiltDatesAdapter) {
         vm.builtDates.observe(viewLifecycleOwner) { builtDates ->
-            adjustVisibility(container)
+            container.hasBuiltDates = !builtDates.isNullOrEmpty()
             adapter.submitList(builtDates)
         }
 
         vm.title.observe(viewLifecycleOwner) { title ->
             activity?.title = title
         }
-    }
-
-    private fun adjustVisibility(container: ViewBuiltDatesBinding) {
-        container.builtDatesList.visibility = View.VISIBLE
-        container.loading.visibility = View.GONE
     }
 }

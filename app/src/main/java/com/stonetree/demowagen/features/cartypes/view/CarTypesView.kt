@@ -62,17 +62,12 @@ class CarTypesView : CoreView() {
 
     private fun bindObservers(container: ViewCarTypesBinding, adapter: CarTypesAdapter) {
         vm.carTypes.observe(viewLifecycleOwner) { carTypes ->
-            adjustVisibility(container)
+            container.hasCarTypes = !carTypes.isNullOrEmpty()
             adapter.submitList(carTypes)
         }
 
         vm.title.observe(viewLifecycleOwner) { title ->
             activity?.title = title
         }
-    }
-
-    private fun adjustVisibility(container: ViewCarTypesBinding) {
-        container.carTypesList.visibility = View.VISIBLE
-        container.loading.visibility = View.GONE
     }
 }
