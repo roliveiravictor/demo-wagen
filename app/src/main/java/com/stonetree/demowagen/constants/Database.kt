@@ -13,7 +13,6 @@ object Database {
     const val BUILT_DATE_COLUMN = "built_date"
 
     const val WKDA_TABLE = "wkda"
-    const val WKDA_PK = "wkda_pk"
     const val WKDA_ID = "wkda_id"
     const val WKDA_NAME = "wkda_name"
 

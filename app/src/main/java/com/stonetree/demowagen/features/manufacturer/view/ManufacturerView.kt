@@ -28,12 +28,16 @@ class ManufacturerView : CoreView() {
 
         bindData(container, adapter)
         bindObservers(container, adapter)
-        bindBackPressed()
+        bindListeners(container)
         return container.root
     }
 
-    private fun bindBackPressed() {
+    private fun bindListeners(container: ViewManufacturerBinding) {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressed())
+
+        container.swipeRefreshLayout.setOnRefreshListener {
+            vm.invalidateDataSource()
+        }
     }
 
     override fun onBackPressed(): OnBackPressedCallback {
@@ -55,7 +59,7 @@ class ManufacturerView : CoreView() {
     private fun bindObservers(container: ViewManufacturerBinding, adapter: ManufacturerAdapter) {
         vm.manufacturers.observe(viewLifecycleOwner) { manufacturers ->
             container.hasManufacturers = !manufacturers.isNullOrEmpty()
-            adapter.submitList(vm.getManufacturers())
+            adapter.submitList(manufacturers)
         }
 
         vm.title.observe(viewLifecycleOwner) { title ->

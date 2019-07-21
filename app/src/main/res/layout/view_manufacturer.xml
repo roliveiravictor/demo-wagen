@@ -24,6 +24,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/manufacturer_list"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -37,6 +42,8 @@
             android:scrollbars="vertical"
             android:scrollbarThumbVertical="@android:color/darker_gray"
             android:scrollbarSize="@dimen/five_dp"/>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <include
             android:id="@+id/loading"

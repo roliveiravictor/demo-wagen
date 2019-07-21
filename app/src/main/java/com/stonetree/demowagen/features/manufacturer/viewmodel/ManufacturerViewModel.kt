@@ -1,20 +1,32 @@
 package com.stonetree.demowagen.features.manufacturer.viewmodel
 
 import androidx.lifecycle.*
+import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import com.stonetree.corerepository.CoreRepositoryConstant
+import com.stonetree.corerepository.CoreRepositoryConstant.FETCH_DISTANCE
+import com.stonetree.corerepository.CoreRepositoryConstant.PAGE_SIZE
 import com.stonetree.demowagen.data.wkda.WKDA
+import com.stonetree.demowagen.data.wkda.WKDADataSourceFactory
 import com.stonetree.demowagen.features.manufacturer.resources.repository.ManufacturerRepository
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class ManufacturerViewModel(val repository: ManufacturerRepository) : ViewModel() {
 
-    var manufacturers: MutableLiveData<PagedList<WKDA>> = MutableLiveData()
+    private val factory: WKDADataSourceFactory = WKDADataSourceFactory(repository)
+
+    private val config: PagedList.Config = PagedList.Config.Builder()
+        .setInitialLoadSizeHint(PAGE_SIZE)
+        .setPageSize(PAGE_SIZE)
+        .setPrefetchDistance(FETCH_DISTANCE)
+        .setEnablePlaceholders(false)
+        .build()
 
     var title: MutableLiveData<String> = MutableLiveData()
 
-    fun getManufacturers() = manufacturers.value
+    val manufacturers: LiveData<PagedList<WKDA>> = LivePagedListBuilder(factory, config).build()
+
+    fun invalidateDataSource() = factory.data.value?.invalidate()
 
     @ExperimentalCoroutinesApi
     override fun onCleared() {
@@ -30,8 +42,6 @@ class ManufacturerViewModel(val repository: ManufacturerRepository) : ViewModel(
             repository.setTitle(title)
 
             repository.cacheApiData()
-
-            repository.getManufacturers(manufacturers)
         }
     }
 }

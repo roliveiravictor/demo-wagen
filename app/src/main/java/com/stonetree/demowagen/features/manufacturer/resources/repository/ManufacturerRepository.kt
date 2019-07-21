@@ -2,7 +2,6 @@ package com.stonetree.demowagen.features.manufacturer.resources.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.paging.PagedList
 import com.stonetree.corerepository.enqueue
 import com.stonetree.demowagen.data.wagen.Wagen
 import com.stonetree.demowagen.data.wagen.WagenDao
@@ -10,7 +9,6 @@ import com.stonetree.demowagen.features.manufacturer.model.ManufacturerResponse
 import com.stonetree.demowagen.data.wkda.WKDADao
 import com.stonetree.demowagen.data.wkda.WKDA
 import com.stonetree.demowagen.features.manufacturer.resources.api.ManufacturerApi
-import com.stonetree.demowagen.features.manufacturer.resources.pagedlist.ManufacturerPagedList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -88,27 +86,19 @@ private constructor(private val wkdaDao: WKDADao,
 
     private fun cacheWKDA(response: Response<ManufacturerResponse>) {
         CoroutineScope(Dispatchers.IO).launch {
-            wkdaDao.clear()
             wkdaDao.insertAll(withParsed(response))
         }
     }
 
-    suspend fun getManufacturers(manufacturers: MutableLiveData<PagedList<WKDA>>) {
-        withContext(Dispatchers.IO) {
-            val pagedList = ManufacturerPagedList.
-                getInstance(wkdaDao).
-                fetchPage()
-
-            manufacturers.postValue(pagedList)
-        }
-    }
-
     private fun withParsed(response: Response<ManufacturerResponse>): List<WKDA> {
-        val wkdaList = arrayListOf<WKDA>()
+        val list = arrayListOf<WKDA>()
         response.body()?.wkda?.forEach { wkda ->
-            val row = WKDA(wkda.key, wkda.value)
-            wkdaList.add(row)
+            val row = WKDA(wkda.value)
+            row.id = wkda.key
+            list.add(row)
         }
-        return wkdaList
+        return list
     }
+
+    fun getManufacturers() = wkdaDao.getAll()
 }
