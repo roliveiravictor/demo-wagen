@@ -72,6 +72,6 @@ private class ManufacturerDiffCallback : DiffUtil.ItemCallback<WKDA>() {
         oldItem: WKDA,
         newItem: WKDA
     ): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.name == newItem.name
     }
 }

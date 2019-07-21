@@ -25,13 +25,22 @@ class WKDADataSource(private val repository: ManufacturerRepository) : Positiona
     override fun loadRange(params: LoadRangeParams, callback: LoadRangeCallback<WKDA>) {
         CoroutineScope(Dispatchers.IO).launch {
             repository.getManufacturers()?.apply {
-                callback.onResult(
-                    subList(
-                        params.startPosition,
-                        params.startPosition + params.loadSize
-                    )
-                )
+                callback.onResult(subList(
+                    params.startPosition,
+                    getNextSublistStopPosition(this, params)
+                ))
             }
         }
+    }
+
+    private fun getNextSublistStopPosition(
+        list: List<WKDA>,
+        params: LoadRangeParams
+    ): Int {
+        var nextSublistSize = params.startPosition + params.loadSize
+        return if(nextSublistSize > list.size)
+            list.size
+        else
+            nextSublistSize
     }
 }
