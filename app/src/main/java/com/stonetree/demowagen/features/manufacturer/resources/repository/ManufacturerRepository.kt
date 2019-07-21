@@ -64,7 +64,7 @@ private constructor(private val wkdaDao: WKDADao,
         }
     }
 
-    suspend fun cacheApiData() {
+    suspend fun cacheApiData(hasManufacturers: MutableLiveData<Boolean>) {
         val api = CoreRepository
             .getInstance()
             .retrofit
@@ -73,8 +73,10 @@ private constructor(private val wkdaDao: WKDADao,
         val request: Call<ManufacturerResponse> = api.getManufacturers()
         withContext(Dispatchers.IO) {
             request.enqueue {
-                onResponse = { response ->
-                    cacheWKDA(response)
+                onResponse = { wkdas ->
+                    CoroutineScope(Dispatchers.IO).launch {
+                        wkdaDao.insertAll(toBeCached(hasManufacturers, wkdas))
+                    }
                 }
 
                 onFailure = { error ->
@@ -84,19 +86,21 @@ private constructor(private val wkdaDao: WKDADao,
         }
     }
 
-    private fun cacheWKDA(response: Response<ManufacturerResponse>) {
-        CoroutineScope(Dispatchers.IO).launch {
-            wkdaDao.insertAll(withParsed(response))
-        }
-    }
-
-    private fun withParsed(response: Response<ManufacturerResponse>): List<WKDA> {
+    private fun toBeCached(hasManufacturers: MutableLiveData<Boolean>,
+                           response: Response<ManufacturerResponse>) : List<WKDA>
+    {
         val list = arrayListOf<WKDA>()
         response.body()?.wkda?.forEach { wkda ->
             val row = WKDA(wkda.value)
             row.id = wkda.key
             list.add(row)
         }
+
+        if(list.isEmpty())
+            hasManufacturers.postValue(false)
+        else
+            hasManufacturers.postValue(true)
+
         return list
     }
 

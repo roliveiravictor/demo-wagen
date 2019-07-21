@@ -3,7 +3,6 @@ package com.stonetree.demowagen.features.manufacturer.viewmodel
 import androidx.lifecycle.*
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.stonetree.corerepository.CoreRepositoryConstant
 import com.stonetree.corerepository.CoreRepositoryConstant.FETCH_DISTANCE
 import com.stonetree.corerepository.CoreRepositoryConstant.PAGE_SIZE
 import com.stonetree.demowagen.data.wkda.WKDA
@@ -22,9 +21,11 @@ class ManufacturerViewModel(val repository: ManufacturerRepository) : ViewModel(
         .setEnablePlaceholders(false)
         .build()
 
+    val manufacturers: LiveData<PagedList<WKDA>> = LivePagedListBuilder(factory, config).build()
+
     var title: MutableLiveData<String> = MutableLiveData()
 
-    val manufacturers: LiveData<PagedList<WKDA>> = LivePagedListBuilder(factory, config).build()
+    var hasManufacturers: MutableLiveData<Boolean> = MutableLiveData()
 
     @ExperimentalCoroutinesApi
     override fun onCleared() {
@@ -38,8 +39,7 @@ class ManufacturerViewModel(val repository: ManufacturerRepository) : ViewModel(
             repository.loadWagen()
 
             repository.setTitle(title)
-
-            repository.cacheApiData()
+            repository.cacheApiData(hasManufacturers)
         }
     }
 }

@@ -13,6 +13,7 @@ import com.stonetree.demowagen.databinding.ViewManufacturerBinding
 import com.stonetree.demowagen.features.manufacturer.view.adapter.ManufacturerAdapter
 import com.stonetree.demowagen.features.manufacturer.viewmodel.ManufacturerViewModel
 import com.stonetree.demowagen.utilities.InjectorUtils
+import kotlinx.android.synthetic.main.view_prodruct_selection.*
 
 class ManufacturerView : CoreView() {
 
@@ -52,10 +53,15 @@ class ManufacturerView : CoreView() {
         container.manufacturerList.adapter = adapter
     }
 
-    private fun bindObservers(container: ViewManufacturerBinding, adapter: ManufacturerAdapter) {
+    private fun bindObservers(container: ViewManufacturerBinding,
+                              adapter: ManufacturerAdapter)
+    {
         vm.manufacturers.observe(viewLifecycleOwner) { manufacturers ->
-            container.hasManufacturers = !manufacturers.isNullOrEmpty()
             adapter.submitList(manufacturers)
+        }
+
+        vm.hasManufacturers.observe(viewLifecycleOwner) { hasManufacturers ->
+            container.hasManufacturers = hasManufacturers
         }
 
         vm.title.observe(viewLifecycleOwner) { title ->
