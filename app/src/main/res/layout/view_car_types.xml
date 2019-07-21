@@ -31,7 +31,10 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/list_item_car_type"
             android:layoutAnimation="@anim/list_animation"
-            app:isGone="@{!hasCarTypes}" />
+            app:isGone="@{!hasCarTypes}"
+            android:scrollbars="vertical"
+            android:scrollbarThumbVertical="@android:color/darker_gray"
+            android:scrollbarSize="@dimen/five_dp"/>
 
         <include
             android:id="@+id/loading"

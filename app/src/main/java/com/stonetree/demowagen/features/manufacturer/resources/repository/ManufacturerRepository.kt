@@ -2,12 +2,15 @@ package com.stonetree.demowagen.features.manufacturer.resources.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.PagedList
 import com.stonetree.corerepository.enqueue
-import com.stonetree.demowagen.data.Wagen
-import com.stonetree.demowagen.data.WagenDao
+import com.stonetree.demowagen.data.wagen.Wagen
+import com.stonetree.demowagen.data.wagen.WagenDao
 import com.stonetree.demowagen.features.manufacturer.model.ManufacturerResponse
-import com.stonetree.demowagen.data.WKDA
+import com.stonetree.demowagen.data.wkda.WKDADao
+import com.stonetree.demowagen.data.wkda.WKDA
 import com.stonetree.demowagen.features.manufacturer.resources.api.ManufacturerApi
+import com.stonetree.demowagen.features.manufacturer.resources.pagedlist.ManufacturerPagedList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,8 +19,10 @@ import retrofit2.Call
 import retrofit2.Response
 import stonetree.com.meals.core.provider.CoreRepository
 
-class ManufacturerRepository private constructor(private val wagenDao: WagenDao){
-
+class ManufacturerRepository
+private constructor(private val wkdaDao: WKDADao,
+                     private val wagenDao: WagenDao)
+{
     private lateinit var wagen: Wagen
 
     init {
@@ -32,8 +37,8 @@ class ManufacturerRepository private constructor(private val wagenDao: WagenDao)
     companion object {
         @Volatile
         private var instance: ManufacturerRepository? = null
-        fun getInstance(wagenDao: WagenDao) = instance ?: synchronized(this) {
-            ManufacturerRepository(wagenDao).also {
+        fun getInstance(wkdaDao: WKDADao, wagenDao: WagenDao) = instance ?: synchronized(this) {
+            ManufacturerRepository(wkdaDao, wagenDao).also {
                 instance = it
             }
         }
@@ -61,7 +66,7 @@ class ManufacturerRepository private constructor(private val wagenDao: WagenDao)
         }
     }
 
-    suspend fun getManufacturers(data: MutableLiveData<List<WKDA>>) {
+    suspend fun cacheApiData() {
         val api = CoreRepository
             .getInstance()
             .retrofit
@@ -71,7 +76,7 @@ class ManufacturerRepository private constructor(private val wagenDao: WagenDao)
         withContext(Dispatchers.IO) {
             request.enqueue {
                 onResponse = { response ->
-                    parse(response, data)
+                    cacheWKDA(response)
                 }
 
                 onFailure = { error ->
@@ -81,15 +86,29 @@ class ManufacturerRepository private constructor(private val wagenDao: WagenDao)
         }
     }
 
-    private fun parse(
-        response: Response<ManufacturerResponse>,
-        data: MutableLiveData<List<WKDA>>
-    ) {
+    private fun cacheWKDA(response: Response<ManufacturerResponse>) {
+        CoroutineScope(Dispatchers.IO).launch {
+            wkdaDao.clear()
+            wkdaDao.insertAll(withParsed(response))
+        }
+    }
+
+    suspend fun getManufacturers(manufacturers: MutableLiveData<PagedList<WKDA>>) {
+        withContext(Dispatchers.IO) {
+            val pagedList = ManufacturerPagedList.
+                getInstance(wkdaDao).
+                fetchPage()
+
+            manufacturers.postValue(pagedList)
+        }
+    }
+
+    private fun withParsed(response: Response<ManufacturerResponse>): List<WKDA> {
         val wkdaList = arrayListOf<WKDA>()
         response.body()?.wkda?.forEach { wkda ->
             val row = WKDA(wkda.key, wkda.value)
             wkdaList.add(row)
         }
-        data.postValue(wkdaList)
+        return wkdaList
     }
 }

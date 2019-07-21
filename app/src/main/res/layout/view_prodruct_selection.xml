@@ -7,7 +7,7 @@
     <data>
         <variable
             name="wagen"
-            type="com.stonetree.demowagen.data.Wagen"/>
+            type="com.stonetree.demowagen.data.wagen.Wagen"/>
 
         <variable
             name="view"

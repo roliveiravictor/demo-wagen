@@ -11,10 +11,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.stonetree.coreview.CoreView
 import com.stonetree.demowagen.R
+import com.stonetree.demowagen.data.wkda.WKDA
 import com.stonetree.demowagen.features.cartypes.view.adapter.CarTypesAdapter
 import com.stonetree.demowagen.features.cartypes.viewmodel.CarTypesViewModel
 import com.stonetree.demowagen.databinding.ViewCarTypesBinding
-import com.stonetree.demowagen.data.WKDA
 import com.stonetree.demowagen.utilities.InjectorUtils
 
 class CarTypesView : CoreView() {

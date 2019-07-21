@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import com.stonetree.corerepository.enqueue
 import com.stonetree.demowagen.features.cartypes.model.CarTypesResponse
 import com.stonetree.demowagen.features.cartypes.resources.api.CarTypesApi
-import com.stonetree.demowagen.data.WKDA
-import com.stonetree.demowagen.data.Wagen
-import com.stonetree.demowagen.data.WagenDao
+import com.stonetree.demowagen.data.wagen.Wagen
+import com.stonetree.demowagen.data.wagen.WagenDao
+import com.stonetree.demowagen.data.wkda.WKDA
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

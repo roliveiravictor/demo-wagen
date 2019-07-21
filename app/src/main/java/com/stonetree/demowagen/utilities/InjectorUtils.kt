@@ -1,12 +1,13 @@
 package com.stonetree.demowagen.utilities
 
 import android.content.Context
-import com.stonetree.demowagen.data.WagenDatabase
+import com.stonetree.demowagen.data.wagen.WagenDatabase
+import com.stonetree.demowagen.data.wkda.WKDA
 import com.stonetree.demowagen.features.builtdates.resources.repository.BuiltDatesRepository
 import com.stonetree.demowagen.features.builtdates.viewmodel.BuiltDatesViewModelFactory
 import com.stonetree.demowagen.features.cartypes.resources.repository.CarTypesRepository
 import com.stonetree.demowagen.features.cartypes.viewmodel.CarTypesViewModelFactory
-import com.stonetree.demowagen.data.WKDA
+import com.stonetree.demowagen.data.wkda.WKDADatabase
 import com.stonetree.demowagen.features.manufacturer.model.ManufacturerViewModelFactory
 import com.stonetree.demowagen.features.manufacturer.resources.repository.ManufacturerRepository
 import com.stonetree.demowagen.features.productselection.resources.repository.ProductSelectionRepository
@@ -18,6 +19,7 @@ object InjectorUtils {
         context: Context
     ): ManufacturerViewModelFactory {
         return ManufacturerViewModelFactory(ManufacturerRepository.getInstance(
+            WKDADatabase.getInstance(context.applicationContext).wkdaDao(),
             WagenDatabase.getInstance(context.applicationContext).wagenDao())
         )
     }

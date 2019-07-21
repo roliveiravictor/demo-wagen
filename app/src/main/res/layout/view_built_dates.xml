@@ -31,7 +31,10 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/list_item_built_dates"
             android:layoutAnimation="@anim/list_animation"
-            app:isGone="@{!hasBuiltDates}"/>
+            app:isGone="@{!hasBuiltDates}"
+            android:scrollbars="vertical"
+            android:scrollbarThumbVertical="@android:color/darker_gray"
+            android:scrollbarSize="@dimen/five_dp"/>
 
         <include
             android:id="@+id/loading"

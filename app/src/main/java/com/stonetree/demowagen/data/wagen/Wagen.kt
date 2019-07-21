@@ -1,4 +1,4 @@
-package com.stonetree.demowagen.data
+package com.stonetree.demowagen.data.wagen
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

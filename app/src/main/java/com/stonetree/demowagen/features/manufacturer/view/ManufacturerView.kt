@@ -55,7 +55,7 @@ class ManufacturerView : CoreView() {
     private fun bindObservers(container: ViewManufacturerBinding, adapter: ManufacturerAdapter) {
         vm.manufacturers.observe(viewLifecycleOwner) { manufacturers ->
             container.hasManufacturers = !manufacturers.isNullOrEmpty()
-            adapter.submitList(manufacturers)
+            adapter.submitList(vm.getManufacturers())
         }
 
         vm.title.observe(viewLifecycleOwner) { title ->

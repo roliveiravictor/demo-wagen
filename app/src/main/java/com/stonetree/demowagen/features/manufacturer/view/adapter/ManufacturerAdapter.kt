@@ -6,21 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil.inflate
 import androidx.navigation.findNavController
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.stonetree.demowagen.R
+import com.stonetree.demowagen.data.wkda.WKDA
 import com.stonetree.demowagen.databinding.ListItemManufacturerBinding
-import com.stonetree.demowagen.data.WKDA
 import com.stonetree.demowagen.features.manufacturer.resources.directions.ManufacturerDirections
 
-class ManufacturerAdapter : ListAdapter<WKDA, ManufacturerAdapter.ViewHolder>(ManufacturerDiffCallback()) {
+class ManufacturerAdapter : PagedListAdapter<WKDA, ManufacturerAdapter.ViewHolder>(ManufacturerDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         getItem(position).let { wkda ->
             with(holder) {
                 itemView.tag = position
-                bind(createOnClickListener(wkda), wkda.name, getRowColor(position))
+                wkda?.apply { bind(createOnClickListener(this), name, getRowColor(position)) }
             }
         }
     }

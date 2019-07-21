@@ -1,8 +1,8 @@
 package com.stonetree.demowagen.features.productselection.resources.repository
 
 import androidx.lifecycle.MutableLiveData
-import com.stonetree.demowagen.data.Wagen
-import com.stonetree.demowagen.data.WagenDao
+import com.stonetree.demowagen.data.wagen.Wagen
+import com.stonetree.demowagen.data.wagen.WagenDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

@@ -23,7 +23,7 @@
         tools:layout="@layout/view_car_types">
         <argument
             android:name="wkda"
-            app:argType="com.stonetree.demowagen.data.WKDA"
+            app:argType="com.stonetree.demowagen.data.wkda.WKDA"
             android:defaultValue="@null"
             app:nullable="true"/>
         <action
