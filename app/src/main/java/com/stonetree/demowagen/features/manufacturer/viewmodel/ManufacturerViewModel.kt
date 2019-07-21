@@ -26,8 +26,6 @@ class ManufacturerViewModel(val repository: ManufacturerRepository) : ViewModel(
 
     val manufacturers: LiveData<PagedList<WKDA>> = LivePagedListBuilder(factory, config).build()
 
-    fun invalidateDataSource() = factory.data.value?.invalidate()
-
     @ExperimentalCoroutinesApi
     override fun onCleared() {
         super.onCleared()
