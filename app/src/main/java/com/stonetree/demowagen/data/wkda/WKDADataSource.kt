@@ -12,7 +12,7 @@ class WKDADataSource(private val repository: ManufacturerRepository) : Positiona
     override fun loadInitial(params: LoadInitialParams, callback: LoadInitialCallback<WKDA>) {
         CoroutineScope(Dispatchers.IO).launch {
             repository.getManufacturers()?.apply {
-                if(this.isNotEmpty()) {
+                if (this.isNotEmpty()) {
                     val position = computeInitialLoadPosition(params, 0)
                     val loadSize = computeInitialLoadSize(params, position, PAGE_SIZE)
                     val sublist = subList(position, position + loadSize)

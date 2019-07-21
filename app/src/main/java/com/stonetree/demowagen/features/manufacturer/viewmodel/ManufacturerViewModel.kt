@@ -39,7 +39,8 @@ class ManufacturerViewModel(val repository: ManufacturerRepository) : ViewModel(
             repository.loadWagen()
 
             repository.setTitle(title)
-            repository.cacheApiData(hasManufacturers)
+
+            repository.cacheApiData(factory, hasManufacturers)
         }
     }
 }

@@ -8,6 +8,7 @@ import com.stonetree.demowagen.data.wagen.WagenDao
 import com.stonetree.demowagen.features.manufacturer.model.ManufacturerResponse
 import com.stonetree.demowagen.data.wkda.WKDADao
 import com.stonetree.demowagen.data.wkda.WKDA
+import com.stonetree.demowagen.data.wkda.WKDADataSourceFactory
 import com.stonetree.demowagen.features.manufacturer.resources.api.ManufacturerApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -42,6 +43,8 @@ private constructor(private val wkdaDao: WKDADao,
         }
     }
 
+    fun getManufacturers() = wkdaDao.getAll()
+
     suspend fun createWagen() {
         withContext(Dispatchers.IO) {
             wagenDao.insert(Wagen("", "", "", ""))
@@ -64,7 +67,8 @@ private constructor(private val wkdaDao: WKDADao,
         }
     }
 
-    suspend fun cacheApiData(hasManufacturers: MutableLiveData<Boolean>) {
+    suspend fun cacheApiData(factory: WKDADataSourceFactory, hasManufacturers: MutableLiveData<Boolean>)
+    {
         val api = CoreRepository
             .getInstance()
             .retrofit
@@ -73,9 +77,12 @@ private constructor(private val wkdaDao: WKDADao,
         val request: Call<ManufacturerResponse> = api.getManufacturers()
         withContext(Dispatchers.IO) {
             request.enqueue {
-                onResponse = { wkdas ->
+                onResponse = { response ->
                     CoroutineScope(Dispatchers.IO).launch {
-                        wkdaDao.insertAll(toBeCached(hasManufacturers, wkdas))
+                        val wkdas: List<WKDA> = parse(response)
+                        invalidateEmptyCache(wkdas, factory)
+                        cacheWKDAs(wkdas)
+                        updateManufacturersVisibility(hasManufacturers, wkdas)
                     }
                 }
 
@@ -86,8 +93,7 @@ private constructor(private val wkdaDao: WKDADao,
         }
     }
 
-    private fun toBeCached(hasManufacturers: MutableLiveData<Boolean>,
-                           response: Response<ManufacturerResponse>) : List<WKDA>
+    private fun parse(response: Response<ManufacturerResponse>) : List<WKDA>
     {
         val list = arrayListOf<WKDA>()
         response.body()?.wkda?.forEach { wkda ->
@@ -95,14 +101,27 @@ private constructor(private val wkdaDao: WKDADao,
             row.id = wkda.key
             list.add(row)
         }
+        return list
+    }
 
+    private fun cacheWKDAs(wkdas: List<WKDA>) {
+        wkdaDao.insertAll(wkdas)
+    }
+
+    private fun invalidateEmptyCache(wkdas: List<WKDA>,
+                                     factory: WKDADataSourceFactory)
+    {
+        if(wkdaDao.getAll().isEmpty() && wkdas.isNotEmpty())
+            factory.data.value?.invalidate()
+    }
+
+    private fun updateManufacturersVisibility(
+        hasManufacturers: MutableLiveData<Boolean>,
+        list: List<WKDA>)
+    {
         if(list.isEmpty())
             hasManufacturers.postValue(false)
         else
             hasManufacturers.postValue(true)
-
-        return list
     }
-
-    fun getManufacturers() = wkdaDao.getAll()
 }

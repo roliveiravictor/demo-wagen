@@ -13,8 +13,8 @@ import com.stonetree.demowagen.databinding.ViewManufacturerBinding
 import com.stonetree.demowagen.features.manufacturer.view.adapter.ManufacturerAdapter
 import com.stonetree.demowagen.features.manufacturer.viewmodel.ManufacturerViewModel
 import com.stonetree.demowagen.utilities.InjectorUtils
-import kotlinx.android.synthetic.main.view_prodruct_selection.*
 
+//TODO - Better network error handling (401, 403, 502, etc)
 class ManufacturerView : CoreView() {
 
     private val vm: ManufacturerViewModel by viewModels {
