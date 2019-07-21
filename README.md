@@ -82,17 +82,17 @@
 
   - N/A
 
-#   References:
+#   References
 
   - Many references were used during this learning process. Still, only was question was generated on Stack Overflow.
 
   - [MutableLiveData not updating after fetching on ROM database](https://stackoverflow.com/questions/57132940/mutablelivedata-wont-trigger-loadafter-to-fetch-from-android-rom-using-pagedlis)
 
-#   Contact:
+#   Contact
 
 - roliveira.victor@gmail.com
 
-#   Forthcoming Work:
+#   Forthcoming Work
 
 - PageKeyedDataSource implementation for API calling
 
