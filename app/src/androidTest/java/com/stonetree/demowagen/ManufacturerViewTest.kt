@@ -2,6 +2,7 @@ package com.stonetree.demowagen
 
 import android.content.pm.ActivityInfo
 import android.graphics.Color
+import android.os.Handler
 import android.view.View
 import androidx.navigation.findNavController
 import androidx.test.espresso.Espresso.onView
@@ -20,6 +21,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.internal.runner.junit4.statement.UiThreadStatement.runOnUiThread
+import kotlinx.coroutines.runBlocking
 
 @RunWith(AndroidJUnit4::class)
 class ManufacturerViewTest {
@@ -50,9 +52,10 @@ class ManufacturerViewTest {
 
     @Test
     fun test_evenRowColor_shouldReturnGray() {
-        Thread.sleep(5000)
-        onView(withId(R.id.manufacturer_list))
-            .perform(action {RecyclerViewActions.scrollTo<ViewHolder>(atPosition(0, hasBackground(Color.LTGRAY)))})
+        runBlocking {
+            onView(withId(R.id.manufacturer_list))
+                .perform(action {RecyclerViewActions.scrollTo<ViewHolder>(atPosition(0, hasBackground(Color.LTGRAY)))})
+        }
     }
 
     @Test
@@ -65,8 +68,9 @@ class ManufacturerViewTest {
 
     @Test
     fun test_navigateToCarType_shouldLoadCarTypeFragment() {
+        //TODO - Change thread sleep for another handle to avoid blocking
         Thread.sleep(5000)
         onView(withId(R.id.manufacturer_list))
-            .perform(action {RecyclerViewActions.scrollTo<ViewHolder>(withText("Suzuki"))}, click())
+            .perform(action {RecyclerViewActions.scrollTo<ViewHolder>(withText("BWM"))}, click())
     }
 }

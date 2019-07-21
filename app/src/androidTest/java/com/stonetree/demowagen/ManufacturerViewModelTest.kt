@@ -4,6 +4,8 @@ import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
 import com.stonetree.demowagen.data.wagen.Wagen
 import com.stonetree.demowagen.data.wagen.WagenDatabase
+import com.stonetree.demowagen.data.wkda.WKDADao
+import com.stonetree.demowagen.data.wkda.WKDADatabase
 import com.stonetree.demowagen.features.manufacturer.resources.repository.ManufacturerRepository
 import com.stonetree.demowagen.features.manufacturer.viewmodel.ManufacturerViewModel
 import kotlinx.coroutines.runBlocking
@@ -21,8 +23,9 @@ class ManufacturerViewModelTest {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         wagenDatabase = Room.inMemoryDatabaseBuilder(context, WagenDatabase::class.java).build()
 
-        val dao = WagenDatabase.getInstance(context.applicationContext).wagenDao()
-        val repository = ManufacturerRepository.getInstance(dao)
+        val wagenDao = WagenDatabase.getInstance(context.applicationContext).wagenDao()
+        val wkdaDao = WKDADatabase.getInstance(context.applicationContext).wkdaDao()
+        val repository = ManufacturerRepository.getInstance(wkdaDao, wagenDao)
         vm = ManufacturerViewModel(repository)
     }
 
