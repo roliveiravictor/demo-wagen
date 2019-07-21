@@ -11,15 +11,15 @@
 
 [3 - Objective](#objective)
 
-[4 - Composition](#composition)
+[4 - Overview](#overview)
 
-[5 - Run](#run)
+[5 - Composition](#composition)
 
-[6 - Requirements](#requirements)
+[6 - Run](#run)
 
-[7 - Usage](#usage)
+[7 - Requirements](#requirements)
 
-[8 - Singletons](#singletons)
+[8 - Usage](#usage)
 
 [9 - References](#references)
 
@@ -51,23 +51,23 @@
 
 # Composition
 
-  - kotlin = '1.3.41'
-  - retrofit = '2.6.0'
-  - spinkit = '1.2.0'
-  - converter gson = '2.6.0'
-  - lifecycle = '2.2.0-alpha02'
-  - recyclerview = '1.0.0'
-  - navigation fragment = '1.0.0'
-  - navigation fragment ktx = '2.1.0-alpha06'
-  - navigation ui = '2.0.0'
-  - fragment ktx = '1.0.0'
-  - safeargs = '1.0.0-alpha11'
-  - corektx = '1.0.2'
-  - room = '2.1.0'
-  - interceptor = '3.8.0'
-  - coretesting = '2.0.1'
-  - esperocore = '3.2.0'
-  - pagingruntime = '2.1.0-rc01'
+  - kotlin = 1.3.41
+  - retrofit = 2.6.0
+  - spinkit = 1.2.0
+  - converter gson = 2.6.0
+  - lifecycle = 2.2.0-alpha02
+  - recyclerview = 1.0.0
+  - navigation fragment = 1.0.0
+  - navigation fragment ktx = 2.1.0-alpha06
+  - navigation ui = 2.0.0
+  - fragment ktx = 1.0.0
+  - safeargs = 1.0.0-alpha11
+  - corektx = 1.0.2
+  - room = 2.1.0
+  - interceptor = 3.8.0
+  - coretesting = 2.0.1
+  - esperocore = 3.2.0
+  - pagingruntime = 2.1.0-rc01
 
 # Run
 
@@ -86,7 +86,7 @@
 
   - Many references were used during this learning process. Still, only was question was generated on Stack Overflow.
 
-  - [MutableLiveData not updating after fetching on ROM Database](https://stackoverflow.com/questions/57132940/mutablelivedata-wont-trigger-loadafter-to-fetch-from-android-rom-using-pagedlis)
+  - [MutableLiveData not updating after fetching on ROM database](https://stackoverflow.com/questions/57132940/mutablelivedata-wont-trigger-loadafter-to-fetch-from-android-rom-using-pagedlis)
 
 #   Contact:
 
