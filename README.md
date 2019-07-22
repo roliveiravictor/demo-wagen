@@ -104,7 +104,7 @@
 
 #   Preview
 
-<img src="assets/preview.gif" width="394" height="854">
+<img src="assets/preview.gif" width="347" height="753">
 
 #   Buy me a coffee ;)
 
