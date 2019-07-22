@@ -97,10 +97,10 @@
 
 - roliveira.victor@gmail.com
 
-#   Forthcoming Work`
+#   Forthcoming Work
 
 - `PageKeyedDataSource` implementation for API calling
-- `SwipeRefreshLayout` implementation to invalidate DataSource`
+- `SwipeRefreshLayout` implementation to invalidate `DataSource`
 
 #   Preview
 
