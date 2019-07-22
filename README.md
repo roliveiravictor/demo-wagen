@@ -76,7 +76,7 @@
   -   Clone this repository and open build.gradle with Android Studio
   
   -   By trying different branches, make sure to clean install the APK. Not doing this
-      might crash the right on its opening, due to difference between ROM schemas.
+      might crash the App right on its opening, due to different ROM schemas.
 
 # Requirements
 
