@@ -104,7 +104,7 @@
 
 #   Preview
 
-![preview.gif](assets/preview.gif)
+![preview.gif](assets/preview.gif =295x640)
 
 #   Buy me a coffee ;)
 
