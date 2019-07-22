@@ -27,7 +27,9 @@
 
 [11 - Forthcoming Work](#forthcoming-work)
 
-[12 - Buy me a coffee](#buy-me-a-coffee-)
+[12 - Preview](#preview)
+
+[13 - Buy me a coffee](#buy-me-a-coffee-)
 
 # Description
 
@@ -43,7 +45,7 @@
 
 # Objective
 
-  - Learn about Android Jetpacks's libraries
+  - Learn about Android Jetpacks' libraries
 
 # Overview
 
@@ -72,6 +74,9 @@
 # Run
 
   -   Clone this repository and open build.gradle with Android Studio
+  
+  -   By trying different branches, make sure to clean install the APK. Not doing this
+      might crash the right on its opening, due to difference between ROM schemas.
 
 # Requirements
 
@@ -92,9 +97,14 @@
 
 - roliveira.victor@gmail.com
 
-#   Forthcoming Work
+#   Forthcoming Work`
 
-- PageKeyedDataSource implementation for API calling
+- `PageKeyedDataSource` implementation for API calling
+- `SwipeRefreshLayout` implementation to invalidate DataSource`
+
+#   Preview
+
+- N/A
 
 #   Buy me a coffee ;)
 
