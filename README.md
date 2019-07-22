@@ -104,7 +104,7 @@
 
 #   Preview
 
-- N/A
+![preview.gif](assets/preview.gif)
 
 #   Buy me a coffee ;)
 
